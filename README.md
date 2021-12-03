@@ -38,3 +38,4 @@ Contributions are welcomed# EzeeInvoiceQR
 # EzeeInvoiceQR
 # EzeeInvoiceQR
 # EzeeInvoiceQR
+# EzeeInvoiceQR
