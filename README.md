@@ -37,3 +37,4 @@ Please DM me if you face any problem in setting up Ezee Invoice Setup
 Contributions are welcomed# EzeeInvoiceQR
 # EzeeInvoiceQR
 # EzeeInvoiceQR
+# EzeeInvoiceQR
