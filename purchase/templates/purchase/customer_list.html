@@ -1,0 +1,39 @@
+
+{% block content %}
+<h2>Customer List </h2>
+<ul>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Supplier Terms </th>
+        <th scope="col">Contact Name</th>
+        <th scope="col">Mobile No</th>
+        <th scope="col">Phone No</th>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for cust in object_list %}
+
+  <tr>
+    <th scope="row">1</th>
+    <td>{{cust.cusotmer_name}}</td>
+    <td>{{cust.address}}</td>
+    <td>{{cust.supplier}}</td>
+    <td>{{cust.supplier_Terms}}</td>
+    <td>{{cust.supplier_Contac_Name}}</td>
+    <td>{{cust.mobile_no}}</td>
+    <td>{{cust.land_line}}</td>
+
+   
+    {% endfor %}
+
+</tbody>
+</table>
+
+
+</ul>
+{% endblock %}

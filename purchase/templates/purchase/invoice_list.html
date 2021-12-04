@@ -1,0 +1,34 @@
+
+{% block content %}
+<h2>Invoices</h2>
+<ul>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Invoice Date</th>
+        <th scope="col">Department</th>
+        <th scope="col">Total </th>
+
+      </tr>
+    </thead>
+    <tbody>
+    {% for invoice in object_list %}
+         
+
+
+
+  <tr>
+    <th scope="row">1</th>
+    <td>{{invoice.invoice_Date}}</td>
+    <td>{{invoice.department}}</td>
+    <td>{{invocie.total_Ammount}}</td>
+
+    {% endfor %}
+
+</tbody>
+</table>
+
+
+</ul>
+{% endblock %}

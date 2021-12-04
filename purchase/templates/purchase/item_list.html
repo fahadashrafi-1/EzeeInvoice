@@ -1,0 +1,28 @@
+
+    <body>
+      <h2>Item List </h2>
+    <ul>
+
+    </ul>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Item Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for item in object_list %}
+            <th scope="row">1</th>
+            <td>{{item.item_date_created}}</td>
+            <td>{{item.item_name}}</td>
+            <td>{{item.item_detail}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
