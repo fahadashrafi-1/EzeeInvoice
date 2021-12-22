@@ -38,7 +38,7 @@ Please DM me if you face any problem in setting up Ezee Invoice Setup
 ![image](Docs/Dashboared.png)
 ![image](Docs/DownloadPDFInvoice.png)
 ![image](Docs/CustomerList.png)
-![image](Docs/B2B_Invoice.png)
+![image](Docs/B2B_Invoice.PNG)
 ![image](Docs/Add_invoices.png)
 ![image](Docs/showtables.png)
 
