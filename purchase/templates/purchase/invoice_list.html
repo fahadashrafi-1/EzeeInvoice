@@ -1,3 +1,4 @@
+{% extends 'purchase/base.html' %}
 
 {% block content %}
 <h2>Invoices</h2>
@@ -12,13 +13,11 @@
 
       </tr>
     </thead>
+
     <tbody>
-    {% for invoice in object_list %}
-         
-
-
 
   <tr>
+    {% for invoice in object_list %}
     <th scope="row">1</th>
     <td>{{invoice.invoice_Date}}</td>
     <td>{{invoice.department}}</td>

@@ -11,7 +11,7 @@ urlpatterns = [
     path('NewCustomer/', views.NewCustomer),
     path('NewInvoice/', views.NewInvoice),
     path('items/', views.ItemView.as_view()),    
-    path('itemInvoice/', itemInvocieDesicription.as_view()),
+    path('Invoices/', itemInvocieDesicription.as_view()),
     path('custList/', views.customerList.as_view()),
     path('', views.index, name='index'),
 

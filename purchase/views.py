@@ -20,8 +20,6 @@ from django.views.generic import ListView
 
 
 def viewpdf(request):
-
-
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
     buffer = io.BytesIO()
@@ -51,17 +49,16 @@ def viewpdf(request):
     return FileResponse(buffer, as_attachment=True, filename='Ezee-Invoice.pdf')
 
 def index(request):
-    tot_custo = customers.objects.all().count()
-    tot_invoices = invoice.objects.all().count()
-    tot_items = items.objects.all().count()
-
-    return TemplateResponse(request, 'purchase/index.html', {'entries': tot_custo})
-
-def get_name(request):
-    return HttpResponse("Fahad is a good developing developer")
+    context = {
+    'tot_custo' : customers.objects.all().count(),
+    'tot_invoices' : invoice.objects.all().count(),
+    'tot_items' : items.objects.all().count(),
+    }
+    return TemplateResponse(request, 'purchase/index.html', {'entries': context})
 
 class itemInvocieDesicription(ListView):
     model = invoice
+
    
 
 def get_name(request):
