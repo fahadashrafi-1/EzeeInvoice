@@ -1,3 +1,4 @@
+{% extends 'purchase/base.html' %}
 
 <!DOCTYPE html>
 <html>
@@ -6,8 +7,10 @@
     </head>
 
     <body>
+
         {% block content %}
     
+
 
 <form action="/pur/" method="post">
     {% csrf_token %}
@@ -15,9 +18,10 @@
     {{ form.as_p}}
 
     <input type="submit" value="Submit">
+
 </form>
 
-  
+
     {% endblock content %}
     </body>
 </html>
