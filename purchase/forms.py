@@ -1,3 +1,4 @@
+from sre_constants import SUCCESS
 from django.forms import ModelForm, fields
 from django.forms import formset_factory
 from django import forms
@@ -18,10 +19,10 @@ class ItemsForm(ModelForm):
         fields = ['item_number', 'item_name', 'item_detail']
 
 class CustomerForm(ModelForm):
-
     class Meta:
         model = customers
         fields = '__all__'
+        
 
 class InvoiceDescr(forms.Form):
     model = invoice_description

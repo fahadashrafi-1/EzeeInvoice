@@ -15,7 +15,7 @@ import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
 from .forms import NameForm, ItemsForm, CustomerForm, NewInvoice
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 
 
 
@@ -87,15 +87,11 @@ def NewItem(request):
         form = ItemsForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
-
+            form.save()
+            return HttpResponseRedirect('/items/')
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ItemsForm()
-
     return render(request, 'purchase/name.html', {'form': form})
 
 
@@ -104,7 +100,7 @@ def NewCustomer(request):
         form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/pur/')
+            return HttpResponseRedirect('/custList/')
 
     else:
         form = CustomerForm()
@@ -131,6 +127,5 @@ class ItemView(ListView):
 class customerList(ListView):
     model = customers
     template_name = 'purchase/customer_list.html'
-
 
 

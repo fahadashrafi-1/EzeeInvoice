@@ -1,4 +1,4 @@
-
+{% extends 'purchase/base.html' %}
 {% block content %}
 <h2>Customer List </h2>
 <ul>
@@ -22,11 +22,10 @@
     <th scope="row">1</th>
     <td>{{cust.cusotmer_name}}</td>
     <td>{{cust.address}}</td>
-    <td>{{cust.supplier}}</td>
     <td>{{cust.supplier_Terms}}</td>
     <td>{{cust.supplier_Contac_Name}}</td>
     <td>{{cust.mobile_no}}</td>
-    <td>{{cust.land_line}}</td>
+    <td>{{cust.land_Line}}</td>
 
    
     {% endfor %}
