@@ -16,9 +16,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+         
             {% for item in object_list %}
-            <th scope="row">1</th>
+            <tr>
+            <th scope="row">{{item.id}}</th>
             <td>{{item.item_date_created}}</td>
             <td>{{item.item_name}}</td>
             <td>{{item.item_detail}}</td>

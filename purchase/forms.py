@@ -29,5 +29,7 @@ class InvoiceDescr(forms.Form):
     extra = 3
 
 class NewInvoice(ModelForm):
-    model = invoice
-    # extra = 
+    class Meta:
+        model = invoice
+        fields = '__all__'
+        success_url = '/'

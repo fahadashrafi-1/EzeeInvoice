@@ -16,13 +16,14 @@
 
     <tbody>
 
-  <tr>
+
     {% for invoice in object_list %}
-    <th scope="row">1</th>
+    <tr>
+    <th scope="row">{{invoice.id}}</th>
     <td>{{invoice.invoice_Date}}</td>
     <td>{{invoice.department}}</td>
     <td>{{invocie.total_Ammount}}</td>
-
+      </tr>
     {% endfor %}
 
 </tbody>

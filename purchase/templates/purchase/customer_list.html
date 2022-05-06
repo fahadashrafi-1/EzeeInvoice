@@ -19,7 +19,7 @@
     {% for cust in object_list %}
 
   <tr>
-    <th scope="row">1</th>
+    <th scope="row">{{cust.id}}</th>
     <td>{{cust.cusotmer_name}}</td>
     <td>{{cust.address}}</td>
     <td>{{cust.supplier_Terms}}</td>

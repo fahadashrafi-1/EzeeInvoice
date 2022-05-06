@@ -108,11 +108,12 @@ def NewCustomer(request):
     return render(request, 'purchase/name.html', {'form': form})
     
 
-def NewInvoice(request):
+def NewInvo(request):
     if request.method == 'POST':
         form = NewInvoice(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
+            form.save()
+            return HttpResponseRedirect('/custList/')
 
     else:
         form = NewInvoice()
