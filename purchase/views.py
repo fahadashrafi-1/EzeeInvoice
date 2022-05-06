@@ -14,7 +14,7 @@ from reportlab.pdfgen import canvas
 import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
-from .forms import NameForm, ItemsForm, CustomerForm, NewInvoice
+from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView
 
 
@@ -108,18 +108,43 @@ def NewCustomer(request):
     return render(request, 'purchase/name.html', {'form': form})
     
 
-def NewInvo(request):
-    if request.method == 'POST':
-        form = NewInvoice(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/custList/')
+# def NewInvo(request):
+#     if request.method == 'POST':
+#         form = NewInvoice(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/custList/')
 
-    else:
-        form = NewInvoice()
+#     else:
+#         form = NewInvoice()
 
-    return render(request, 'purchase/name.html', {'form': form})
-    
+#     return render(request, 'purchase/name.html', {'form': form})
+
+class NewInvo(CreateView):
+    model = invoice
+    fields = '__all__'
+    success_url = '/'
+        
+    def get_context_data(self, **kwargs):
+        context = super(NewInvo, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['InvoiceDescr'] = InvoiceDescr(self.request.POST)
+        else:
+            context['InvoiceDescr'] = InvoiceDescr()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['InvoiceDescr']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return HttpResponse('Form Saved')
+        else:
+            # return super().form_invalid(form)
+            return HttpResponse('Form Not Saved Saved')
+
 
 class ItemView(ListView):
     model = items

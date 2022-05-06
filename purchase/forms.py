@@ -1,6 +1,6 @@
 from sre_constants import SUCCESS
 from django.forms import ModelForm, fields
-from django.forms import formset_factory
+from django.forms import formset_factory, inlineformset_factory
 from django import forms
 from .models import *
 
@@ -24,12 +24,17 @@ class CustomerForm(ModelForm):
         fields = '__all__'
         
 
-class InvoiceDescr(forms.Form):
-    model = invoice_description
-    extra = 3
+class InvoiceDescr(ModelForm):
+    class Meta:
+        model = invoice_description
+        extra = 3
+        fields = '__all__'  
+
+InvoiceDescr = inlineformset_factory(invoice, invoice_description,
+                                        form=InvoiceDescr, extra=3)
 
 class NewInvoice(ModelForm):
     class Meta:
         model = invoice
         fields = '__all__'
-        success_url = '/'
+        # success_url = '/'

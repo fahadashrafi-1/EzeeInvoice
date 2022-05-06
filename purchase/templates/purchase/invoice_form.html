@@ -1,0 +1,41 @@
+{% extends 'purchase/base.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ezee Invocie</title>
+    </head>
+
+    <body>
+
+        {% block content %}
+    
+        <form action="" method="post">
+    
+            {% csrf_token %}
+    
+                    {{ form.as_p }}
+                    <h5 class="text-info">Add Items Data </h5>
+                    {% for form in InvoiceDescr %}
+                    <div>{{form.items.label}}: {{ form.items }}
+                         {{form.item_price.label}}: {{ form.item_price }}
+                         {{form.quantity.label}}: {{ form.quantity }}
+                         {{form.total_price.label}}: {{ form.total_price }}
+                         {{form.total_vat.label}}: {{ form.total_vat }}
+
+                        </div>
+             
+
+                    {% endfor %}
+      
+
+            <input type="submit" value="Submit">
+
+        </form>
+
+
+        {% endblock content %}
+
+    </body>
+
+</html>
