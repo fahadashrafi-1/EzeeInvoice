@@ -28,7 +28,7 @@ class InvoiceDescr(ModelForm):
     class Meta:
         model = invoice_description
         extra = 3
-        fields = '__all__'  
+        fields = '__all__'
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,
                                         form=InvoiceDescr, extra=3)
@@ -37,4 +37,4 @@ class NewInvoice(ModelForm):
     class Meta:
         model = invoice
         fields = '__all__'
-        # success_url = '/'
+        success_url = '/'
