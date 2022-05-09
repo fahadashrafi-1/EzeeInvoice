@@ -142,8 +142,8 @@ class NewInvo(CreateView):
             formset.save()
             return HttpResponse('Form Saved')
         else:
-            # return super().form_invalid(form)
-            return HttpResponse('Form Not Saved Saved')
+            return super().form_invalid(formset)
+            # return HttpResponse('Form Not Saved Saved')
 
 
 class ItemView(ListView):

@@ -13,21 +13,13 @@
         <form action="" method="post">
     
             {% csrf_token %}
-    
+
+            <h5 class="text-info">Add Invoice Data </h5>
+            <br>
                     {{ form.as_p }}
-                    <h5 class="text-info">Add Items Data </h5>
-                    {% for form in InvoiceDescr %}
-                    <div>{{form.items.label}}: {{ form.items }}
-                         {{form.item_price.label}}: {{ form.item_price }}
-                         {{form.quantity.label}}: {{ form.quantity }}
-                         {{form.total_price.label}}: {{ form.total_price }}
-                         {{form.total_vat.label}}: {{ form.total_vat }}
 
-                        </div>
+                    {{ InvoiceDescr.as_table }}
              
-
-                    {% endfor %}
-      
 
             <input type="submit" value="Submit">
 

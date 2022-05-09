@@ -22,7 +22,6 @@ class CustomerForm(ModelForm):
     class Meta:
         model = customers
         fields = '__all__'
-        
 
 class InvoiceDescr(ModelForm):
     class Meta:
