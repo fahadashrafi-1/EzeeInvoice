@@ -3,13 +3,16 @@
 {% block content %}
 <h2>Invoices</h2>
 <ul>
-  <table class="table table-dark">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Invoice Date</th>
+        <th scope="col">Customer</th>
         <th scope="col">Department</th>
+        <th scope="col">VAT </th>
         <th scope="col">Total </th>
+        <th scope="col">PDF Invoice </th>
 
       </tr>
     </thead>
@@ -19,10 +22,14 @@
 
     {% for invoice in object_list %}
     <tr>
-    <th scope="row">{{invoice.id}}</th>
-    <td>{{invoice.invoice_Date}}</td>
-    <td>{{invoice.department}}</td>
-    <td>{{invocie.total_Ammount}}</td>
+    <th scope="row">{{ invoice.id }}</th>
+    <td>{{ invoice.invoice_Date }}</td>
+    <td>{{ invoice.cusotmer_name }}</td>
+    <td>{{ invoice.department }}</td>
+    <td>{{ invoice.vat }}</td>
+    <td>{{ invoice.total_Ammount }}</td>
+    <td><a class="btn btn-success" href="/pdf/" role="button">Downlaod</a></td>
+    
       </tr>
     {% endfor %}
 

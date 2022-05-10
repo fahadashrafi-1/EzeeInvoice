@@ -33,14 +33,18 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'purchase.apps.PurchaseConfig',
     'django_countries',
-    # 'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "crispy_forms",
+    "crispy_bootstrap5",
+
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,7 +129,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-os.path
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-print(STATIC_URL)
-
+CRISPY_TEMPLATE_PACK = "bootstrap5"

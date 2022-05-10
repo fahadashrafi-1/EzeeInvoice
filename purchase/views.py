@@ -19,7 +19,7 @@ from django.views.generic import ListView, CreateView
 
 
 
-def viewpdf(request):
+def pdfview(request):
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
     buffer = io.BytesIO()
@@ -51,15 +51,15 @@ def viewpdf(request):
 def index(request):
     context = {
     'tot_custo' : customers.objects.all().count(),
-    'tot_invoices' : invoice.objects.all().count(),
     'tot_items' : items.objects.all().count(),
+    'tot_invoi' : invoice.objects.all().count(),
     }
     return TemplateResponse(request, 'purchase/index.html', {'entries': context})
 
 class itemInvocieDesicription(ListView):
     model = invoice
 
-   
+
 
 def get_name(request):
     # if this is a POST request we need to process the form data
@@ -106,19 +106,7 @@ def NewCustomer(request):
         form = CustomerForm()
 
     return render(request, 'purchase/name.html', {'form': form})
-    
-
-# def NewInvo(request):
-#     if request.method == 'POST':
-#         form = NewInvoice(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/custList/')
-
-#     else:
-#         form = NewInvoice()
-
-#     return render(request, 'purchase/name.html', {'form': form})
+  
 
 class NewInvo(CreateView):
     model = invoice
@@ -155,3 +143,32 @@ class customerList(ListView):
     template_name = 'purchase/customer_list.html'
 
 
+def pdfview1(request, pk):
+
+    context = { 'query' : invoice.objects.filter(id = pk),} 
+
+    x = ["Ezee Invocie", 123456789, 50, 30, 290]
+    qr = QRCodeImage([x], size=40 * mm)
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer)
+    cust = customers.objects.all()
+    tot_custo = customers.objects.all().count()
+    tot_invoices = invoice.objects.all().count()
+    tot_items = items.objects.all().count()
+    
+ 
+    p.drawString(10, 500, "Total Customers "+ str(tot_custo) + "Total Invoices "+ str(tot_invoices) + "Total Items "+ str(tot_items) + "context"+ str(pk))
+
+    p.drawString(10, 10, "Hello World")
+    x2 = [tot_custo , tot_invoices, tot_items, context]
+
+    qr2 = QRCodeImage([x2], size=40 * mm)
+    qr3 = QRCodeImage([destList], size=40 * mm)
+
+    qr.drawOn(p, 300, 10)
+    qr2.drawOn(p, 100, 10)
+        
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='Ezee-Invoice.pdf')

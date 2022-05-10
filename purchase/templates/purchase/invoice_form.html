@@ -1,4 +1,5 @@
 {% extends 'purchase/base.html' %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -13,10 +14,14 @@
         <form action="" method="post">
     
             {% csrf_token %}
-
-            <h5 class="text-info">Add Invoice Data </h5>
+            
+            <h3 class="text-info">Add Invoice  </h3>
             <br>
-                    {{ form.as_p }}
+            
+            {{ form|crispy }}
+
+            <h3 class="text-info">Add Items Details </h3>
+
 
                     {{ InvoiceDescr.as_table }}
              
