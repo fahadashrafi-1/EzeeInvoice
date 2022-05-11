@@ -13,6 +13,7 @@
             <th scope="col">Date Created</th>
             <th scope="col">Item Name</th>
             <th scope="col">Item Details</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -21,10 +22,16 @@
             <tr>
             <th scope="row">{{item.id}}</th>
             <td>{{item.item_date_created}}</td>
-            <td>{{item.item_name}}</td>
+            <td><a href="/{{ item.id }}/itemEdit">   {{item.item_name}} </a> </td>
             <td>{{item.item_detail}}</td>
+            <td><a class="btn btn-danger" href="/{{ item.id }}/ItemDele" role="button">Delete</a></td>
+            
           </tr>
           {% endfor %}
+          <h3>
+          <button type="button" class="btn btn-link"><a href="/NewItem"> Create </a> </button>
+          </h3>
+
 
         </tbody>
       </table>

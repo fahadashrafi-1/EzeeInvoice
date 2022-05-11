@@ -5,15 +5,13 @@
 <ul>
   <table class="table table-striped">
     <thead>
-      <tr>
-        <th scope="col">#</th>
+        <th scope="col">Number</th>
         <th scope="col">Invoice Date</th>
-        <th scope="col">Customer</th>
+        <th scope="col">Customer </th>
         <th scope="col">Department</th>
         <th scope="col">VAT </th>
         <th scope="col">Total </th>
-        <th scope="col">PDF Invoice </th>
-
+        <th scope="col">PDF Invoice  </th>
       </tr>
     </thead>
 
@@ -24,7 +22,7 @@
     <tr>
     <th scope="row">{{ invoice.id }}</th>
     <td>{{ invoice.invoice_Date }}</td>
-    <td>{{ invoice.cusotmer_name }}</td>
+    <td><a href="/{{ invoice.id }}/InvoUpdate/"> {{ invoice.cusotmer_name }}</a></td>
     <td>{{ invoice.department }}</td>
     <td>{{ invoice.vat }}</td>
     <td>{{ invoice.total_Ammount }}</td>

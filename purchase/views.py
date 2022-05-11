@@ -1,5 +1,6 @@
 import re
 from typing import Text
+from dagster import success_hook
 from django import http
 from django.http import response
 from django.http.response import Http404
@@ -15,7 +16,7 @@ import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
 from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 
 
@@ -59,8 +60,6 @@ def index(request):
 class itemInvocieDesicription(ListView):
     model = invoice
 
-
-
 def get_name(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -79,7 +78,6 @@ def get_name(request):
 
     return render(request, 'purchase/name.html', {'form': form})
 
-
 def NewItem(request):
 
     if request.method == 'POST':
@@ -94,7 +92,6 @@ def NewItem(request):
         form = ItemsForm()
     return render(request, 'purchase/name.html', {'form': form})
 
-
 def NewCustomer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -107,7 +104,6 @@ def NewCustomer(request):
 
     return render(request, 'purchase/name.html', {'form': form})
   
-
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'
@@ -133,20 +129,53 @@ class NewInvo(CreateView):
             return super().form_invalid(formset)
             # return HttpResponse('Form Not Saved Saved')
 
+class InvoiceUpdate(UpdateView):
+    model = invoice
+    fields = '__all__'
+    success_url = '/'
+        
+    def get_context_data(self, **kwargs):
+        context = super(InvoiceUpdate, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['InvoiceDescr'] = InvoiceDescr(self.request.POST)
+        else:
+            context['InvoiceDescr'] = InvoiceDescr()
+        return context
 
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['InvoiceDescr']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return HttpResponse('Form Saved')
+        else:
+            return super().form_invalid(formset)
+            # return HttpResponse('Form Not Saved Saved')
 class ItemView(ListView):
     model = items
     template_name = 'purchase/item_list.html'
+
+class ItemDelete(DeleteView):
+    model = items
+    fields = '__all__'
+    template_name = 'purchase/item_delete.html'
+    success_url = '/items/'
+
+class ItemEdit(UpdateView):
+    model = items
+    fields = '__all__'
+    template_name = 'purchase/name.html'
+    success_url = '/items/'
 
 class customerList(ListView):
     model = customers
     template_name = 'purchase/customer_list.html'
 
-
 def pdfview1(request, pk):
 
-    context = { 'query' : invoice.objects.filter(id = pk),} 
-
+    context = invoice.objects.get(id=pk)
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
     buffer = io.BytesIO()
@@ -157,8 +186,15 @@ def pdfview1(request, pk):
     tot_items = items.objects.all().count()
     
  
-    p.drawString(10, 500, "Total Customers "+ str(tot_custo) + "Total Invoices "+ str(tot_invoices) + "Total Items "+ str(tot_items) + "context"+ str(pk))
+    # p.drawString(10, 500, "Total Customers "+ str(tot_custo) + "Total Invoices "+ str(tot_invoices) + "Total Items "+ str(tot_items) + str(a))
+    p.drawText('Fahad')
 
+    
+
+    destList = []
+    for i in context:
+        destList.append(i)
+    
     p.drawString(10, 10, "Hello World")
     x2 = [tot_custo , tot_invoices, tot_items, context]
 
@@ -167,7 +203,8 @@ def pdfview1(request, pk):
 
     qr.drawOn(p, 300, 10)
     qr2.drawOn(p, 100, 10)
-        
+    qr3.drawOn(p, 400, 10)
+    
     p.showPage()
     p.save()
     buffer.seek(0)

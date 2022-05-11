@@ -1,0 +1,32 @@
+{% extends 'purchase/base.html' %}
+
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ezee Invocie</title>
+    </head>
+
+    <body>
+
+        {% block content %}
+    
+        <form action="" method="post">
+    
+            {% csrf_token %}
+                           
+                {{ form|crispy}}
+            
+                Are you sure you want to Delete Said item
+
+        <input type="submit" value="Delete">
+
+        </form>
+
+
+        {% endblock content %}
+
+    </body>
+
+</html>
