@@ -16,7 +16,7 @@ urlpatterns = [
     path('custList/', views.customerList.as_view()),
     path('pdf/', views.pdfview),
     path('<pk>/pdf1/', views.pdfview1),
-    path('<pk>/InvoUpdate/', views.InvoiceUpdate.as_view()),
+    path('', views.InvoiceUpdate.as_view()),
     path('', views.index, name='index'),
 
 ]

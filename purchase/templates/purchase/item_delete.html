@@ -15,10 +15,9 @@
         <form action="" method="post">
     
             {% csrf_token %}
-                           
-                {{ form|crispy}}
-            
-                Are you sure you want to Delete Said item
+                         
+                      
+                Are you sure you want to Delete <p class="fw-bold">{{ object }}  item </p>
 
         <input type="submit" value="Delete">
 

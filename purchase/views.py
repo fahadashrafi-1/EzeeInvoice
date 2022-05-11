@@ -15,6 +15,7 @@ from reportlab.pdfgen import canvas
 import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
+from reportlab.platypus.tables import Table
 from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
@@ -174,36 +175,45 @@ class customerList(ListView):
     template_name = 'purchase/customer_list.html'
 
 def pdfview1(request, pk):
-
     context = invoice.objects.get(id=pk)
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
     buffer = io.BytesIO()
     p = canvas.Canvas(buffer)
-    cust = customers.objects.all()
-    tot_custo = customers.objects.all().count()
-    tot_invoices = invoice.objects.all().count()
-    tot_items = items.objects.all().count()
+
+    cent = p._pagesize[0] / 2
     
+    p.drawCentredString(cent, 800, "Ezee Invoices")
+    p.drawCentredString(cent, 750, "Vat No : 123456789")
+    
+    p.drawString(10, 700, "Customer Name : The First Customer")
+    p.drawString(10, 680, "Invoice No : 13")
+    p.drawString(470, 700, "Date : 25-June-2022")
+    p.drawString(470, 680, "Due On: 25-June-2022")
+
+    p.drawCentredString(cent, 650, "Items")
+
+    data = ['1','2','3','4','5']
+    width = 400
+    height = 100
+    f = Table(data)
+    f.wrapOn(p, width, height)
+    f.drawOn(p, 10, 550)
  
-    # p.drawString(10, 500, "Total Customers "+ str(tot_custo) + "Total Invoices "+ str(tot_invoices) + "Total Items "+ str(tot_items) + str(a))
-    p.drawText('Fahad')
 
     
+    # destList = []
+    # for i in context:
+    #     destList.append(i)
 
-    destList = []
-    for i in context:
-        destList.append(i)
-    
-    p.drawString(10, 10, "Hello World")
-    x2 = [tot_custo , tot_invoices, tot_items, context]
+    # x2 = [tot_custo , tot_invoices, tot_items, context]
 
-    qr2 = QRCodeImage([x2], size=40 * mm)
-    qr3 = QRCodeImage([destList], size=40 * mm)
+    # qr2 = QRCodeImage([x2], size=40 * mm)
+    # qr3 = QRCodeImage([destList], size=40 * mm)
 
     qr.drawOn(p, 300, 10)
-    qr2.drawOn(p, 100, 10)
-    qr3.drawOn(p, 400, 10)
+    # qr2.drawOn(p, 100, 10)
+    # qr3.drawOn(p, 400, 10)
     
     p.showPage()
     p.save()
