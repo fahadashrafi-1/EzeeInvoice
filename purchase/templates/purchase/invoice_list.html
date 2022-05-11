@@ -11,6 +11,7 @@
         <th scope="col">Department</th>
         <th scope="col">VAT </th>
         <th scope="col">Total </th>
+        <th scope="col">Invoice Details </th>
         <th scope="col">PDF Invoice  </th>
       </tr>
     </thead>
@@ -26,6 +27,7 @@
     <td>{{ invoice.department }}</td>
     <td>{{ invoice.vat }}</td>
     <td>{{ invoice.total_Ammount }}</td>
+    <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetails/" role="button">Details</a></td>
     <td><a class="btn btn-success" href="/pdf/" role="button">Downlaod</a></td>
     
       </tr>

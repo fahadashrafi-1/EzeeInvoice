@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
 from django.utils.translation import templatize
 from django.views.generic import ListView
+from requests import request
 from .models import *
 import pandas as pd
 from django.template.response import TemplateResponse
@@ -94,6 +95,7 @@ def NewItem(request):
     return render(request, 'purchase/name.html', {'form': form})
 
 def NewCustomer(request):
+
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.is_valid():
@@ -104,6 +106,14 @@ def NewCustomer(request):
         form = CustomerForm()
 
     return render(request, 'purchase/name.html', {'form': form})
+
+class invoDetail(DetailView):
+    model = invoice
+
+    def get_context_data(self, **kwargs):
+        context = super(invoDetail, self).get_context_data(**kwargs)
+        context['invoice_description'] = invoice_description.objects.filter(id=self.kwargs['pk'])
+        return context
   
 class NewInvo(CreateView):
     model = invoice

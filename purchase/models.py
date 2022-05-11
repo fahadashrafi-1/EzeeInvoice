@@ -32,7 +32,7 @@ class invoice(models.Model):
   
 
 class invoice_description(models.Model):
-    invoice = models.ForeignKey('invoice', on_delete=models.CASCADE)
+    invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
     items = models.ForeignKey(items, on_delete=models.CASCADE)
     item_price = models.IntegerField(default=0, help_text='200')
     quantity = models.IntegerField('Quantity',default=0, blank=False)

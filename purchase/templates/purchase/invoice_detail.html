@@ -1,0 +1,37 @@
+{% extends 'purchase/base.html' %}
+
+{% block content %}
+<h2>Invoices</h2>
+
+{{ invoice.cusotmer_name }}
+{{ invoice.invoice_Date }}
+{{ invoice.department }}
+{{ invoice.Vat }}
+{{ invoice.total_Ammount }}
+{{ invoice.terms }}
+{{ invoice.comments }}
+<br>
+{{ context.now }}
+
+<br>
+
+      {% for invo in invoice_description.all  %}
+
+        {{ invo.items }} 
+        {{ invo.item_price }}
+        {{ invo.quantity}}
+        {{ invo.total_price }}
+        {{ invo.total_vat }}
+     
+      {% endfor %}
+    
+    
+
+    
+
+</tbody>
+</table>
+
+
+</ul>
+{% endblock %}
