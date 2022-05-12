@@ -111,10 +111,10 @@ class invoDetail(DetailView):
     model = invoice
 
     def get_context_data(self, **kwargs):
-        context = super(invoDetail, self).get_context_data(**kwargs)
-        context['invoice_description'] = invoice_description.objects.filter(id=self.kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
         return context
-  
+ 
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'

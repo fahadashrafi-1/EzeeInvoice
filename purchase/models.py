@@ -53,15 +53,9 @@ class invoice_description(models.Model):
 
     @property
     def invoice_total(self):
-        return sum(self.get_total) + self.get_vat
+        return self.get_total + self.get_vat
     
-
-    class InvoiceManager(models.Manager):
-    # """     Manager at pre-select all related items for each query set.    """
-        def get_queryset(self):
-            qs = super().get_queryset()
-            return qs.select_related('invoice', 'customer').prefetch_related('items')
-           
+   
 
 class customers(models.Model):
     cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
