@@ -18,6 +18,7 @@ urlpatterns = [
     path('custList/', views.customerList.as_view()),
     path('pdf/', views.pdfview),
     path('<pk>/pdf1/', views.pdfview1),
+    path('charts/', views.chart),
 
     path('', views.index, name='index'),
 
