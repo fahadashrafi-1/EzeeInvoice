@@ -39,7 +39,6 @@ Please DM me if you face any problem in setting up Ezee Invoice Setup
 ![image](Docs/InvoiceList.png)
 ![image](Docs/Invoice_Details.png)
 ![image](Docs/AddCustomer.png)
-
 ![image](Docs/B2B_Invoice.PNG)
 ![image](Docs/Charts.png)
 ![image](Docs/item_List.png)
