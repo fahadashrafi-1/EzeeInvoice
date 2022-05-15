@@ -234,14 +234,22 @@ def pdfview1(request, pk):
 from django.shortcuts import render
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+import plotly.graph_objects as go
 
 
 def chart(request):
-    context = invoice.objects.all()
-    x_data = [0,1,2,3]
-    y_data = [x**2 for x in x_data]
-    plot_div = plot([Scatter(x=x_data, y=y_data,
-                        mode='lines', name='test',
-                        opacity=0.8, marker_color='green')],
+    context = invoice.objects.values()
+    df = pd.DataFrame(context)
+    df['invoice_Date'] = pd.to_datetime(df['invoice_Date'])
+    x = df.groupby(df.invoice_Date.dt.month)[['total_Ammount']].sum()
+    x = x.reset_index()
+
+    
+    plot_div = plot([Scatter(x=x['invoice_Date'], y=x['total_Ammount'],
+                        mode='lines',  name='test',
+                        opacity=0.8, marker_color='Purple')],
                output_type='div')
+
     return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
+
+
