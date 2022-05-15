@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
 from django.utils.translation import templatize
 from django.views.generic import ListView
+from pendulum import datetime
 from requests import request
 from .models import *
 import pandas as pd
@@ -19,6 +20,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus.tables import Table
 from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+import datetime as dt
 
 
 
@@ -113,6 +115,9 @@ class invoDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
+        context['qrdata'] = QRCodeImage([data], size=40 * mm)
+
         return context
  
 class NewInvo(CreateView):
