@@ -36,12 +36,12 @@ Upcoming
 Please DM me if you face any problem in setting up Ezee Invoice Setup
 
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Dashboared.png)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/InvoiceList.png)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Invoice_Details.png)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/AddCustomer.png)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/InvoiceList.PNG)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Invoice_Details.PNG)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Add_customer.PNG)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/B2B_Invoice.PNG)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Charts.png)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/item_List.png)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Charts.PNG)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/item_List.PNG)
 
 Contributions are welcomed# EzeeInvoiceQR
 
