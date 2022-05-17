@@ -1,6 +1,9 @@
 {% extends 'purchase/base.html' %}
 {% block content %}
 <h2>Customer List </h2>
+
+<button type="button" class="btn btn-link"><a href="/NewCustomer/"> Create </a> </button>
+
 <ul>
   <table class="table table-striped">
     <thead>
@@ -12,6 +15,7 @@
         <th scope="col">Contact Name</th>
         <th scope="col">Mobile No</th>
         <th scope="col">Phone No</th>
+        <th scope="col">Delete</th>
 
       </tr>
     </thead>
@@ -20,14 +24,15 @@
 
   <tr>
     <th scope="row">{{cust.id}}</th>
-    <td>{{cust.cusotmer_name}}</td>
+    <td><a href="/custList/{{ cust.id }}/CustUpdat/">{{ cust.cusotmer_name }}</a></td>
     <td>{{cust.address}}</td>
     <td>{{cust.supplier_Terms}}</td>
     <td>{{cust.supplier_Contac_Name}}</td>
     <td>{{cust.mobile_no}}</td>
     <td>{{cust.land_Line}}</td>
+    <td><a class="btn btn-danger" href="/custList/{{ cust.id }}/CustDelete/" role="button">Delete</a></td>
 
-   
+
     {% endfor %}
 
 </tbody>

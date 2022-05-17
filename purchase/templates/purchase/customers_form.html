@@ -1,0 +1,35 @@
+{% extends 'purchase/base.html' %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ezee Invocie</title>
+    </head>
+
+    <body>
+
+        {% block content %}
+    
+        <form action="" method="post">
+    
+            {% csrf_token %}
+            
+            <h3 class="text-info">Add Customer Details  </h3>
+            <br>
+            
+            {{ form|crispy }}
+
+          
+
+            <input type="submit" value="Save Changes">
+            <a class="btn btn-info" href="/custList/" role="button">Back</a>
+
+        </form>
+
+
+        {% endblock content %}
+
+    </body>
+
+</html>

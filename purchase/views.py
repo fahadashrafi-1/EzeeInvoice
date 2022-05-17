@@ -152,10 +152,6 @@ class InvoiceUpdate(UpdateView):
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['InvoiceDescr'] = InvoiceDescr(self.request.POST)
-        else:
-            context['InvoiceDescr'] = InvoiceDescr()
         return context
 
     def form_valid(self, form):
@@ -188,6 +184,26 @@ class ItemEdit(UpdateView):
 class customerList(ListView):
     model = customers
     template_name = 'purchase/customer_list.html'
+
+class customerDetails(DetailView):
+    model = customers
+    fields: '__all__'
+    success_url = '/custList/'
+
+    # template_name = 'purchase/customer_list.html'
+
+class customerUpdate(UpdateView):
+    model = customers
+    fields = '__all__'
+    success_url = '/custList/'
+    # template_name = 'purchase/customer_list.html'
+
+class customerDelete(DeleteView):
+    model = customers
+    
+    # template_name = 'purchase/customer_list.html'
+
+
 
 def pdfview1(request, pk):
 
