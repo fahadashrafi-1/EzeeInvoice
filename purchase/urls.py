@@ -19,7 +19,7 @@ urlpatterns = [
     path('items/', views.ItemView.as_view()),    
     path('<pk>/itemEdit/', views.ItemEdit.as_view()),
     path('<pk>/ItemDele/', views.ItemDelete.as_view()),
-        path('pdf/', views.pdfview),
+    path('pdf/', views.pdfview),
     path('<pk>/pdf1/', views.pdfview1),
     path('charts/', views.chart),
 

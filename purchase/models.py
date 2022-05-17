@@ -29,7 +29,6 @@ class invoice(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
-  
 
 class invoice_description(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
@@ -54,9 +53,14 @@ class invoice_description(models.Model):
     @property
     def invoice_total(self):
         return self.get_total + self.get_vat
+     
     
+    def save(self, *args, **kwargs):
+        self.total_price = self.get_total
+        self.total_vat = self.get_vat
+        super(invoice_description, self).save()
+        
    
-
 class customers(models.Model):
     cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
     address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')

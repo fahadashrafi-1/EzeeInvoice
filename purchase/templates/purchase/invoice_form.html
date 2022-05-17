@@ -21,11 +21,11 @@
             {{ form|crispy }}
 
             <h3 class="text-info">Add Items Details </h3>
-
-
-                    {{ InvoiceDescr.item_price }}
-                    {{ form.InvoiceUpdate }}
-             
+            <table>
+            
+                <td> {{ InvoiceDescr.as_table }} </td>
+            
+            </table>        
 
             <input type="submit" value="Submit">
 

@@ -28,6 +28,7 @@ class InvoiceDescr(ModelForm):
         model = invoice_description
         extra = 3
         fields = '__all__'
+        success_url = '/'
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,
                                         form=InvoiceDescr, extra=3)
