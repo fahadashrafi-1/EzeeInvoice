@@ -1,7 +1,12 @@
 
+from fileinput import filename
 from django.urls import path
 from .views import *
 from . import views
+from django.urls import URLPattern
+from wkhtmltopdf.views import PDFTemplateView
+
+
 
 urlpatterns = [
     path('name/', views.get_name),
@@ -15,6 +20,7 @@ urlpatterns = [
     path('NewInvoice/', views.NewInvo.as_view()),
     path('Invoices/', itemInvocieDesicription.as_view()),
     path('<pk>/InvoDetails/', invoDetail.as_view()),
+    path('<pk>/InvoDetailsPdf/', PDFTemplateView.as_view(template_name='purchase/invoice_detail.html',filename='my_template.pdf'), name='pdf'),
     path('<pk>/InvoUpdate/', views.InvoiceUpdate.as_view()),
     path('items/', views.ItemView.as_view()),    
     path('<pk>/itemEdit/', views.ItemEdit.as_view()),

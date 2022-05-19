@@ -24,6 +24,7 @@ import datetime as dt
 
 
 
+
 def pdfview(request):
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
@@ -149,22 +150,23 @@ class InvoiceUpdate(UpdateView):
     model = invoice
     fields = '__all__'
     success_url = '/'
+    template_name = 'purchase/invocie_update.html'
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
         return context
 
-    def form_valid(self, form):
-        context = self.get_context_data(form=form)
-        formset = context['InvoiceDescr']
-        if formset.is_valid():
-            response = super().form_valid(form)
-            formset.instance = self.object
-            formset.save()
-            return HttpResponse('Form Saved')
-        else:
-            return super().form_invalid(formset)
-            # return HttpResponse('Form Not Saved Saved')
+    # def form_valid(self, form):
+    #     context = self.get_context_data(form=form)
+    #     formset = context['InvoiceDescr']
+    #     if formset.is_valid():
+    #         response = super().form_valid(form)
+    #         formset.instance = self.object
+    #         formset.save()
+    #         return HttpResponse('Form Saved')
+    #     else:
+    #         return super().form_invalid(formset)
+    #         # return HttpResponse('Form Not Saved Saved')
 class ItemView(ListView):
     model = items
     template_name = 'purchase/item_list.html'
@@ -203,8 +205,6 @@ class customerDelete(DeleteView):
     
     # template_name = 'purchase/customer_list.html'
 
-
-
 def pdfview1(request, pk):
 
     context = invoice.objects.get(id=pk)
@@ -231,6 +231,7 @@ def pdfview1(request, pk):
     f = Table(data)
     f.wrapOn(p, width, height)
     f.drawOn(p, 10, 550)
+
  
 
     

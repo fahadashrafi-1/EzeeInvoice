@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "crispy_forms",
-    "crispy_bootstrap5",
+
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'wkhtmltopdf',
+
 
 ]
 
@@ -132,3 +135,5 @@ STATIC_URL = '/static/'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# WKHTMLTOPDF_CMD = 'C:/Program Files/wkhtmltopdf/bin/'
