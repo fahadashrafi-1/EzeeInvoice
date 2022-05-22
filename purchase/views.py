@@ -112,6 +112,7 @@ def NewCustomer(request):
 
 class invoDetail(DetailView):
     model = invoice
+    template_name = 'purchase/invoice_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -120,6 +121,9 @@ class invoDetail(DetailView):
         context['qrdata'] = QRCodeImage([data], size=40 * mm)
 
         return context
+        
+
+        
  
 class NewInvo(CreateView):
     model = invoice
@@ -154,19 +158,20 @@ class InvoiceUpdate(UpdateView):
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        return context
+        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        return context    
 
-    # def form_valid(self, form):
-    #     context = self.get_context_data(form=form)
-    #     formset = context['InvoiceDescr']
-    #     if formset.is_valid():
-    #         response = super().form_valid(form)
-    #         formset.instance = self.object
-    #         formset.save()
-    #         return HttpResponse('Form Saved')
-    #     else:
-    #         return super().form_invalid(formset)
-    #         # return HttpResponse('Form Not Saved Saved')
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['invoice_items']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return HttpResponse('Form Saved')
+        else:
+            return super().form_invalid(formset)
+            # return HttpResponse('Form Not Saved Saved')
 class ItemView(ListView):
     model = items
     template_name = 'purchase/item_list.html'
