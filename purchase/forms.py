@@ -3,6 +3,8 @@ from django.forms import ModelForm, fields
 from django.forms import formset_factory, inlineformset_factory
 from django import forms
 from .models import *
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
@@ -17,6 +19,16 @@ class ItemsForm(ModelForm):
     class Meta:
         model = items
         fields = ['item_number', 'item_name', 'item_detail']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper() 
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('save_custoemr', 'Save Customer'))
+        self.helper.add_input(Submit('cancel', 'Cancle', css_class='btn btn-danger'))
+
+
+
 
 class CustomerForm(ModelForm):
     class Meta:

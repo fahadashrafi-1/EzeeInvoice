@@ -17,9 +17,11 @@
             
             <h3 class="text-info">Add Invoice  </h3>
             <br>
-            
-            {{ form.as_p }}
-            <br><br><br>
+
+            {{ form |crispy }}
+            {{ formset |crispy }}
+
+
 <br>
 <table class="table table-striped">
   <thead>
