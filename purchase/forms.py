@@ -4,7 +4,7 @@ from django.forms import formset_factory, inlineformset_factory
 from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Row, Column, HTML
 
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
@@ -24,16 +24,42 @@ class ItemsForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper() 
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('save_custoemr', 'Save Customer'))
-        self.helper.add_input(Submit('cancel', 'Cancle', css_class='btn btn-danger'))
+        self.helper.add_input(Submit('save_item', 'Save Item'))
+        self.helper.add_input(Submit('cancel', 'Cancel', css_class='btn btn-danger'))
 
-
-
+        self.helper.layout = Layout(
+            Row(
+                Column('item_number'),
+                Column('item_name'),
+                Column('item_detail')
+            )
+        )
 
 class CustomerForm(ModelForm):
     class Meta:
         model = customers
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper() 
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('save_customer', 'Save Customer'))
+        self.helper.add_input(Submit('cancel', 'Cancel', css_class='btn btn-danger'))
+
+        self.helper.layout = Layout(
+            'cusotmer_name',
+            Row(
+                Column('mobile_no'),
+                Column('land_Line'),
+            ),
+            'address',
+            Row(
+                Column('supplier_Terms'),
+                Column('supplier_Contac_Name'),
+            )                 
+            ,            
+        )
 
 class InvoiceDescr(ModelForm):
     class Meta:
@@ -50,3 +76,24 @@ class NewInvoice(ModelForm):
         model = invoice
         fields = '__all__'
         success_url = '/'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper() 
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('save_customer', 'Save Customer'))
+        self.helper.add_input(Submit('cancel', 'Cancel', css_class='btn btn-danger'))
+
+        self.helper.layout = Layout(
+            'cusotmer_name',
+            Row(
+                Column('department'),
+                Column('vat'),
+            ),
+            'address',
+            Row(
+                Column('terms'),
+                Column('comments'),
+            )          
+            ,            
+        )

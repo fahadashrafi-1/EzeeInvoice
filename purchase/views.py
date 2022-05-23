@@ -84,31 +84,12 @@ def get_name(request):
     return render(request, 'purchase/name.html', {'form': form})
 
 def NewItem(request):
-
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = ItemsForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/items/')
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = ItemsForm()
-    return render(request, 'purchase/name.html', {'form': form})
+    form = ItemsForm()
+    return render(request, 'purchase/item_create.html', {'form': form})
 
 def NewCustomer(request):
-
-    if request.method == 'POST':
-        form = CustomerForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/custList/')
-
-    else:
-        form = CustomerForm()
-
-    return render(request, 'purchase/name.html', {'form': form})
+    form = CustomerForm()
+    return render(request, 'purchase/customer_create.html', {'form': form})
 
 class invoDetail(DetailView):
     model = invoice
@@ -123,8 +104,6 @@ class invoDetail(DetailView):
         return context
         
 
-        
- 
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'
