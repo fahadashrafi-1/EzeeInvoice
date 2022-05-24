@@ -18,7 +18,7 @@ import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
 from reportlab.platypus.tables import Table
-from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
+from .forms import InvoDescr, InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 import datetime as dt
 
@@ -126,8 +126,8 @@ class NewInvo(CreateView):
             formset.save()
             return HttpResponse('Form Saved')
         else:
-            return super().form_invalid(formset)
-            # return HttpResponse('Form Not Saved Saved')
+            # return super().form_invalid(formset)
+            return HttpResponse('Form Not Saved Saved')
 
 class InvoiceUpdate(UpdateView):
     model = invoice
@@ -256,5 +256,5 @@ def chart(request):
 
 def InvocieHeader(request):
     form = NewInvoice()
-    helper = InvoDescrip()
-    return render(request, 'purchase/item_create.html', {'form': form})
+    helper = InvoDescr()
+    return render(request, 'purchase/InvoCreate2Del.html', {'form': form, 'helper': helper})

@@ -65,11 +65,12 @@ class InvoiceDescr(ModelForm):
     class Meta:
         model = invoice_description
         extra = 6
-        fields = '__all__'
-
+        fields = ['items', 'item_price', 'quantity']
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,
                                         form=InvoiceDescr, extra=3)
+
+InvoDescr = formset_factory(InvoiceDescr, extra=3)
 
 class NewInvoice(ModelForm):
     class Meta:
@@ -96,7 +97,7 @@ class NewInvoice(ModelForm):
             ,            
         )
 
-class InvoDescrip(FormHelper):
+class InvoDescr(FormHelper):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.form_method = 'post'
