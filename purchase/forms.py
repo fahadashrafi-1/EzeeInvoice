@@ -64,9 +64,9 @@ class CustomerForm(ModelForm):
 class InvoiceDescr(ModelForm):
     class Meta:
         model = invoice_description
-        extra = 3
+        extra = 6
         fields = '__all__'
-        success_url = '/'
+
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,
                                         form=InvoiceDescr, extra=3)
@@ -85,15 +85,25 @@ class NewInvoice(ModelForm):
         self.helper.add_input(Submit('cancel', 'Cancel', css_class='btn btn-danger'))
 
         self.helper.layout = Layout(
-            'cusotmer_name',
             Row(
+                Column('cusotmer_name'),
                 Column('department'),
-                Column('vat'),
             ),
-            'address',
             Row(
                 Column('terms'),
                 Column('comments'),
             )          
             ,            
         )
+
+class InvoDescrip(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form_method = 'post'
+        self.layout = Layout(
+            'items',
+            'item_price',
+            'quantity',
+            'get_total',
+        )
+        self.render_required_fields = True

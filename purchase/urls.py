@@ -18,6 +18,7 @@ urlpatterns = [
     path('custList/<pk>/CustUpdat/', views.customerUpdate.as_view()),
     path('custList/<pk>/CustDelete/', views.customerDelete.as_view()),
     path('NewInvoice/', views.NewInvo.as_view()),
+    path('InvocieHeader/', views.InvocieHeader),
     path('Invoices/', itemInvocieDesicription.as_view()),
     path('<pk>/InvoDetails/', invoDetail.as_view()),
     path('<pk>/InvoDetailsPdf/', PDFTemplateView.as_view(template_name='purchase/invoice_detail.html',filename='my_template.pdf'), name='pdf'),

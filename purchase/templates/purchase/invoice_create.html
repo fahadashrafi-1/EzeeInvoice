@@ -1,0 +1,22 @@
+{% extends 'purchase/base.html' %}
+
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ezee Invocie</title>
+    </head>
+
+    <body>
+
+        {% block content %}
+    
+ 
+            {% crispy form %}             
+                     
+        {% endblock content %}
+
+    </body>
+
+</html>

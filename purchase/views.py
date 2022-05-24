@@ -253,3 +253,8 @@ def chart(request):
     return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
 
 
+
+def InvocieHeader(request):
+    form = NewInvoice()
+    helper = InvoDescrip()
+    return render(request, 'purchase/item_create.html', {'form': form})

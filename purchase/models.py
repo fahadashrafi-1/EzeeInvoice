@@ -19,7 +19,6 @@ class invoice(models.Model):
     department = models.CharField(max_length=80 , help_text='Finance')
     cusotmer_name =models.ForeignKey('customers', on_delete=models.CASCADE)
     total_Ammount = models.FloatField('Total', default=0)
-    vat = models.FloatField('Vat Percentage %', default=15)
     total_Vat = models.FloatField('Vat Ammount', default=0)
     terms = models.CharField('Terms of Payment',max_length=300, blank=True)
     comments = models.CharField('Comments',max_length=300, blank=True)
@@ -58,6 +57,7 @@ class invoice_description(models.Model):
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
+        invoice.total_Ammount = self.invoice_total
         super(invoice_description, self).save()
         
    
@@ -65,7 +65,7 @@ class customers(models.Model):
     cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
     address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')
     supplier_Terms = models.CharField(max_length=200)
-    supplier_Contac_Name = models.CharField(max_length=200)
+    supplier_Contact_Name = models.CharField(max_length=200)
     mobile_no = models.IntegerField(help_text="0505050505", default=123)
     land_Line = models.IntegerField(help_text="096611-2335464", default=123)
 
