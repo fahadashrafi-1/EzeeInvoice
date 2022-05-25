@@ -1,0 +1,93 @@
+{% load static %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Ezee Invocie </title>
+       <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+{% block content %}
+
+<center>
+  <h1> Ezee Invocie</h1>
+
+  <h2> Vat No 123456789</h2>
+
+  <h3>VAT Invoice No  {{ invoice.id }} ضريبة القيمة المضافة  </h2>
+
+</center>
+<br><br>
+<p class="fs-4">Issued To : <b> {{ invoice.cusotmer_name }} </b></p> 
+
+<p class="fs-4">Issued On : <b>{{ invoice.invoice_Date }}</b></p> 
+
+<p class="fs-4">For Department : <b>{{ invoice.department }}</b></p> 
+
+<p class="fs-4">Terms and Conditions : <b>{{ invoice.terms }}</b></p> 
+
+<p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
+
+<br>
+
+
+
+<br><br><br>
+<br>
+<table class="table table-striped">
+  <thead>
+      <th scope="col">Item Number </th>
+      <th scope="col">Item Name</th>
+      <th scope="col">Price </th>
+      <th scope="col">Quantity</th>
+      <th scope="col"> Amount </th>
+      <th scope="col"> VAT </th>
+      <th scope="col"> Total </th>
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+{% for invo in invoice_items %}
+
+  <tr>
+  <th scope="row">{{ invo.id }}</th>
+  <td>{{ invo.items }}</td>
+  <td>{{ invo.item_price }}</a></td>
+  <td>{{ invo.quantity }}</td>
+  <td>{{ invo.get_total }}</td>
+  <td>{{ invo.get_vat }}</td>
+  <td>{{ invo.invoice_total }}</td>
+  {% endfor %}
+</tbody>
+</table>
+
+
+
+<br>
+<br>
+
+<p class="fs-3">Total VAT on Inovice : {{ invoice.Vat }}</p> 
+<p class="fs-3">Total Amount on Inovice : {{ invoice.total_Ammount }}</p> 
+
+<br>
+<br>
+
+<p class="fs-3"> {{ qrdata }}</p> 
+
+<img src="{{ qrdata }}" alt="connect" style="max-height:300px">
+
+<img src={{ qrdata }}>
+
+
+
+</ul>
+
+
+
+{% endblock %}

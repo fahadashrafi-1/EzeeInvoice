@@ -258,3 +258,5 @@ def InvocieHeader(request):
     form = NewInvoice()
     helper = InvoDescr()
     return render(request, 'purchase/InvoCreate2Del.html', {'form': form, 'helper': helper})
+
+
