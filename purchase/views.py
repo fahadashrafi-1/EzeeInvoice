@@ -191,9 +191,6 @@ class customerDelete(DeleteView):
     model = customers
     success_url = reverse_lazy('cust-list')
     
-    
-    # template_name = 'purchase/customer_list.html'
-
 def pdfview1(request, pk):
 
     context = invoice.objects.get(id=pk)
@@ -262,12 +259,4 @@ def chart(request):
                output_type='div')
 
     return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
-
-
-
-def InvocieHeader(request):
-    form = NewInvoice()
-    helper = InvoDescr()
-    return render(request, 'purchase/InvoCreate2Del.html', {'form': form, 'helper': helper})
-
 
