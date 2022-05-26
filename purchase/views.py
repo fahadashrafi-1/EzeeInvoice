@@ -4,8 +4,9 @@ from dagster import success_hook
 from django import http
 from django.http import response
 from django.http.response import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
 from pendulum import datetime
@@ -83,12 +84,14 @@ def get_name(request):
 
     return render(request, 'purchase/name.html', {'form': form})
 
-def NewItem(request):
-    form = ItemsForm()
-    return render(request, 'purchase/item_create.html', {'form': form})
-
 def NewCustomer(request):
-    form = CustomerForm()
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cust-list')            
+    else:
+        form =  CustomerForm()
     return render(request, 'purchase/customer_create.html', {'form': form})
 
 class invoDetail(DetailView):
@@ -103,7 +106,6 @@ class invoDetail(DetailView):
 
         return context
         
-
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'
@@ -144,6 +146,16 @@ class InvoiceUpdate(UpdateView):
             context['invoice_items'] = InvoiceDescr()
         return context
             
+def NewItem(request):
+    if request.method == "POST":
+        form = ItemsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('items-list')            
+    else:
+        form = ItemsForm()
+
+    return render(request, 'purchase/item_create.html', {'form': form})
 
 class ItemView(ListView):
     model = items
@@ -153,13 +165,13 @@ class ItemDelete(DeleteView):
     model = items
     fields = '__all__'
     template_name = 'purchase/item_delete.html'
-    success_url = '/items/'
+    success_url = reverse_lazy('items-list')
 
 class ItemEdit(UpdateView):
     model = items
     fields = '__all__'
     template_name = 'purchase/name.html'
-    success_url = '/items/'
+    success_url = reverse_lazy('items-list')
 
 class customerList(ListView):
     model = customers
@@ -170,16 +182,15 @@ class customerDetails(DetailView):
     fields: '__all__'
     success_url = '/custList/'
 
-    # template_name = 'purchase/customer_list.html'
-
 class customerUpdate(UpdateView):
     model = customers
     fields = '__all__'
     success_url = '/custList/'
-    # template_name = 'purchase/customer_list.html'
 
 class customerDelete(DeleteView):
     model = customers
+    success_url = reverse_lazy('cust-list')
+    
     
     # template_name = 'purchase/customer_list.html'
 
