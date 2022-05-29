@@ -1,3 +1,4 @@
+from itertools import count
 import re
 from typing import Text
 from dagster import success_hook
@@ -9,7 +10,6 @@ from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpRe
 from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
-from pendulum import datetime
 from requests import request
 from .models import *
 import pandas as pd
@@ -102,14 +102,14 @@ class invoDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        context['qrdata'] = QRCodeImage([data], size=40 * mm)
+        context['qrdata'] = QRCodeImage([data], size=45 * mm)
 
         return context
         
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'
-    success_url = '/'
+    success_url = '/Invoices/'
         
     def get_context_data(self, **kwargs):
         context = super(NewInvo, self).get_context_data(**kwargs)
@@ -126,7 +126,7 @@ class NewInvo(CreateView):
             response = super().form_valid(form)
             formset.instance = self.object
             formset.save()
-            return HttpResponse('Form Saved')
+            return redirect('invo-list')
         else:
             # return super().form_invalid(formset)
             return HttpResponse('Form Not Saved Saved')

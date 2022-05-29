@@ -66,7 +66,7 @@ class CustomerForm(ModelForm):
 class InvoiceDescr(ModelForm):
     class Meta:
         model = invoice_description
-        extra = 6
+        extra = 3
         fields = ['items', 'item_price', 'quantity']
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,

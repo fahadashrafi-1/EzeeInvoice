@@ -22,10 +22,15 @@
             {{ form|crispy }}
 
             <h3 class="text-info">Add Items Details </h3>
+
+            
             <table>
             
-                <!-- <td> {{ InvoiceDescr.as_ul }} </td> -->
+                <!-- <td> {{ InvoiceDescr.as_table }} </td> -->
+
+                
                 {% for item in InvoiceDescr %}
+                
 
                 <div class="container">
                   <div class="row">
@@ -37,17 +42,16 @@
                     </div>
                     <div class="col-sm">
                       {{ item.quantity|as_crispy_field }} 
-                      {% for hidden in item.hidden_fields %}
-                      {{ hidden }}
-                      {% endfor %}
-                    </div>
+                     
+                </div>
                   </div>
                 </div>
-    
-                
+         
                 
                   {% endfor %}            
-            </table>        
+
+
+            </table> 
 
             <input type="submit" value="Submit">
 
