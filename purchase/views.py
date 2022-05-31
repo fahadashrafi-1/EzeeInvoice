@@ -21,8 +21,7 @@ from reportlab.platypus.tables import Table
 from .forms import InvoDescr, InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 import datetime as dt
-
-
+from wkhtmltopdf.views import PDFTemplateView
 
 
 def pdfview(request):
@@ -102,7 +101,22 @@ class invoDetail(DetailView):
         context['qrdata'] = QRCodeImage([data], size=40 * mm)
 
         return context
-        
+
+class PDFTempView(PDFTemplateView):
+    model = invoice
+    template_name = 'purchase/invoice_detail_pdf.html'
+    cmd_options = {
+        'margin-top': 3,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
+        context['qrdata'] = QRCodeImage([data], size=40 * mm)
+
+        return context
+
 
 class NewInvo(CreateView):
     model = invoice

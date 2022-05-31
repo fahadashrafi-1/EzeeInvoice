@@ -10,6 +10,7 @@
        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 {% block content %}
 
@@ -80,7 +81,7 @@
 
 <p class="fs-3"> {{ qrdata }}</p> 
 
-<img src="{{ qrdata }}" alt="connect" style="max-height:300px">
+<img src="{{ qrdata }}" style="max-height:300px">
 
 <img src={{ qrdata }}>
 
