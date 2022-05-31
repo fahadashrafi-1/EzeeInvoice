@@ -1,14 +1,15 @@
+from itertools import count
 import re
 from typing import Text
 from dagster import success_hook
 from django import http
 from django.http import response
 from django.http.response import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
-from pendulum import datetime
 from requests import request
 from .models import *
 import pandas as pd
@@ -82,12 +83,14 @@ def get_name(request):
 
     return render(request, 'purchase/name.html', {'form': form})
 
-def NewItem(request):
-    form = ItemsForm()
-    return render(request, 'purchase/item_create.html', {'form': form})
-
 def NewCustomer(request):
-    form = CustomerForm()
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cust-list')            
+    else:
+        form =  CustomerForm()
     return render(request, 'purchase/customer_create.html', {'form': form})
 
 class invoDetail(DetailView):
@@ -98,30 +101,14 @@ class invoDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        context['qrdata'] = QRCodeImage([data], size=40 * mm)
+        context['qrdata'] = QRCodeImage([data], size=45 * mm)
 
         return context
-
-class PDFTempView(PDFTemplateView):
-    model = invoice
-    template_name = 'purchase/invoice_detail_pdf.html'
-    cmd_options = {
-        'margin-top': 3,
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
-        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        context['qrdata'] = QRCodeImage([data], size=40 * mm)
-
-        return context
-
-
+        
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'
-    success_url = '/'
+    success_url = '/Invoices/'
         
     def get_context_data(self, **kwargs):
         context = super(NewInvo, self).get_context_data(**kwargs)
@@ -138,7 +125,7 @@ class NewInvo(CreateView):
             response = super().form_valid(form)
             formset.instance = self.object
             formset.save()
-            return HttpResponse('Form Saved')
+            return redirect('invo-list')
         else:
             # return super().form_invalid(formset)
             return HttpResponse('Form Not Saved Saved')
@@ -158,6 +145,16 @@ class InvoiceUpdate(UpdateView):
             context['invoice_items'] = InvoiceDescr()
         return context
             
+def NewItem(request):
+    if request.method == "POST":
+        form = ItemsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('items-list')            
+    else:
+        form = ItemsForm()
+
+    return render(request, 'purchase/item_create.html', {'form': form})
 
 class ItemView(ListView):
     model = items
@@ -167,13 +164,13 @@ class ItemDelete(DeleteView):
     model = items
     fields = '__all__'
     template_name = 'purchase/item_delete.html'
-    success_url = '/items/'
+    success_url = reverse_lazy('items-list')
 
 class ItemEdit(UpdateView):
     model = items
     fields = '__all__'
     template_name = 'purchase/name.html'
-    success_url = '/items/'
+    success_url = reverse_lazy('items-list')
 
 class customerList(ListView):
     model = customers
@@ -184,19 +181,15 @@ class customerDetails(DetailView):
     fields: '__all__'
     success_url = '/custList/'
 
-    # template_name = 'purchase/customer_list.html'
-
 class customerUpdate(UpdateView):
     model = customers
     fields = '__all__'
     success_url = '/custList/'
-    # template_name = 'purchase/customer_list.html'
 
 class customerDelete(DeleteView):
     model = customers
+    success_url = reverse_lazy('cust-list')
     
-    # template_name = 'purchase/customer_list.html'
-
 def pdfview1(request, pk):
 
     context = invoice.objects.get(id=pk)
@@ -265,12 +258,4 @@ def chart(request):
                output_type='div')
 
     return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
-
-
-
-def InvocieHeader(request):
-    form = NewInvoice()
-    helper = InvoDescr()
-    return render(request, 'purchase/InvoCreate2Del.html', {'form': form, 'helper': helper})
-
 

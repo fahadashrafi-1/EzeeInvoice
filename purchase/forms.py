@@ -5,6 +5,7 @@ from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML
+from django.urls import reverse_lazy
 
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
@@ -19,6 +20,7 @@ class ItemsForm(ModelForm):
     class Meta:
         model = items
         fields = ['item_number', 'item_name', 'item_detail']
+        success_url = reverse_lazy('items-list')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -56,7 +58,7 @@ class CustomerForm(ModelForm):
             'address',
             Row(
                 Column('supplier_Terms'),
-                Column('supplier_Contac_Name'),
+                Column('supplier_Contact_Name'),
             )                 
             ,            
         )
@@ -64,7 +66,7 @@ class CustomerForm(ModelForm):
 class InvoiceDescr(ModelForm):
     class Meta:
         model = invoice_description
-        extra = 6
+        extra = 3
         fields = ['items', 'item_price', 'quantity']
 
 InvoiceDescr = inlineformset_factory(invoice, invoice_description,

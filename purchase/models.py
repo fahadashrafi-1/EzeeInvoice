@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from django.db.models.fields.json import CaseInsensitiveMixin
+from django.urls import reverse
 
 # Create your models here.
 
@@ -60,7 +60,6 @@ class invoice_description(models.Model):
         invoice.total_Ammount = self.invoice_total
         super(invoice_description, self).save()
         
-   
 class customers(models.Model):
     cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
     address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')
@@ -73,3 +72,6 @@ class customers(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.cusotmer_name
+    
+    def get_absolute_url(self):
+        return reverse('profile-update', kwargs={'pk': self.pk})

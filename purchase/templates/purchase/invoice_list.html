@@ -28,9 +28,9 @@
     <td>{{ invoice.invoice_Date }}</td>
     <td><a href="/{{ invoice.id }}/InvoUpdate/"> {{ invoice.cusotmer_name }}</a></td>
     <td>{{ invoice.department }}</td>
-    <td>{{ invoice.vat }}</td>
+    <td>{{ invoice.total_Vat }}</td>
     <td>{{ invoice.total_Ammount }}</td>
-    <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetails/" role="button">Details</a></td>
+    <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetails/" role="button">Show Invoice</a></td>
     <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetailsPdf/" role="button">Downlaod</a></td>
     
       </tr>
