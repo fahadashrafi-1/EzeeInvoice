@@ -23,6 +23,7 @@ from .forms import InvoDescr, InvoiceDescr, NameForm, ItemsForm, CustomerForm, N
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 import datetime as dt
 from wkhtmltopdf.views import PDFTemplateView
+from datetime import datetime
 
 
 def pdfview(request):
@@ -108,6 +109,7 @@ class invoDetail(DetailView):
 class PDFTempView(PDFTemplateView):
     model = invoice
     template_name = 'purchase/invoice_detail_pdf.html'
+    filename = 'Invoice_'+str(datetime.now())+'.pdf'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
