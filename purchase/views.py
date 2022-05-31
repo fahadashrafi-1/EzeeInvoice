@@ -105,6 +105,18 @@ class invoDetail(DetailView):
 
         return context
         
+class PDFTempView(PDFTemplateView):
+    model = invoice
+    template_name = 'purchase/invoice_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
+        context['qrdata'] = QRCodeImage([data], size=45 * mm)
+
+        return context
+
 class NewInvo(CreateView):
     model = invoice
     fields = '__all__'

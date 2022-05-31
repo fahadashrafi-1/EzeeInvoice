@@ -23,8 +23,9 @@ class invoice(models.Model):
     terms = models.CharField('Terms of Payment',max_length=300, blank=True)
     comments = models.CharField('Comments',max_length=300, blank=True)
     
-    # item_description = models.ForeignKey('item_description', on_delete=models.CASCADE)
-       
+    class meta:
+        ordering = ['-id']
+
     def __str__(self):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
