@@ -21,7 +21,7 @@ urlpatterns = [
     path('NewInvoice/', views.NewInvo.as_view()),
     path('Invoices/', itemInvocieDesicription.as_view(), name='invo-list'),
     path('<pk>/InvoDetails/', invoDetail.as_view()),
-    # path('<pk>/InvoDetailsPdf/', views.PDFTempView.as_view(filename='my_template.pdf'), name='pdf'),
+    path('<pk>/InvoDetailsPdf/', views.PDFTempView.as_view(filename='my_template.pdf')),
     path('<pk>/InvoUpdate/', views.InvoiceUpdate.as_view()),
     path('pdf/', views.pdfview),
     path('<pk>/pdf1/', views.pdfview1),
