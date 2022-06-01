@@ -1,3 +1,4 @@
+from cgitb import html
 from itertools import count
 import re
 from typing import Text
@@ -24,6 +25,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 import datetime as dt
 from wkhtmltopdf.views import PDFTemplateView
 from datetime import datetime
+import qrcode
 
 
 def pdfview(request):
@@ -66,6 +68,15 @@ def index(request):
 class itemInvocieDesicription(ListView):
     model = invoice
 
+class InvoiceSerchView(ListView):
+    model = invoice
+    template_name = 'invoice_serch.html'
+
+    def get_queryset(self, q):
+        query = self.request.GET.get(q)
+        context = invoice.objects.filter(terms__icontains = query)
+        return context
+
 def get_name(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -103,7 +114,6 @@ class invoDetail(DetailView):
         context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
         context['qrdata'] = QRCodeImage([data], size=45 * mm)
-
         return context
 
 class PDFTempView(PDFTemplateView):
@@ -116,9 +126,9 @@ class PDFTempView(PDFTemplateView):
         context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
         context['qrdata'] = QRCodeImage([data], size=45 * mm)
+        context['image'] = qrcode.make(data)        
 
         return context
-
 
 class NewInvo(CreateView):
     model = invoice

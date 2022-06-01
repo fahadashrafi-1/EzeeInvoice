@@ -1,6 +1,10 @@
+from enum import unique
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.db.models import Sum
 from django.urls import reverse
+from soupsieve import select
+import uuid
 
 # Create your models here.
 
@@ -15,6 +19,7 @@ class items(models.Model):
         return self.item_name
 
 class invoice(models.Model):
+    unique_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
     invoice_Date = models.DateField(auto_now=True)
     department = models.CharField(max_length=80 , help_text='Finance')
     cusotmer_name =models.ForeignKey('customers', on_delete=models.CASCADE)
@@ -29,6 +34,7 @@ class invoice(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
+        
     
 class InvoiceDescription(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
@@ -52,14 +58,15 @@ class InvoiceDescription(models.Model):
 
     @property
     def invoice_total(self):
-        return self.get_total + self.get_vat
+        return self.get_total * self.get_vat
      
     
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
         super(InvoiceDescription, self).save()
-        
+
+
 class customers(models.Model):
     cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
     address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')

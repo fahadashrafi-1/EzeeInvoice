@@ -1,0 +1,44 @@
+{% extends 'purchase/base.html' %}
+
+{% block content %}
+<h2>Invoices</h2>
+
+<button type="button" class="btn btn-link"><a href="/NewInvoice"> Create </a> </button>
+
+<ul>
+  <table class="table table-striped">
+    <thead>
+        <th scope="col">Number</th>
+        <th scope="col">Invoice Date</th>
+        <th scope="col">Customer </th>
+        <th scope="col">Department</th>
+        <th scope="col">VAT </th>
+        <th scope="col">Total </th>
+        <th scope="col">Invoice Details </th>
+        <th scope="col">PDF Invoice  </th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+
+    {% for invoice in object_list %}
+    <tr>
+    <th scope="row">{{ invoice.id }}</th>
+    <td>{{ invoice.invoice_Date }}</td>
+    <td><a href="/{{ invoice.id }}/InvoUpdate/"> {{ invoice.cusotmer_name }}</a></td>
+    <td>{{ invoice.department }}</td>
+    <td>{{ invoice.total_Vat }}</td>
+    <td>{{ invoice.total_Ammount }}</td>
+    <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetails/" role="button">Show Invoice</a></td>
+    <td><a class="btn btn-success" href="/{{ invoice.id }}/InvoDetailsPdf/" role="button">Downlaod</a></td>
+    
+      </tr>
+    {% endfor %}
+
+</tbody>
+</table>
+
+
+</ul>
+{% endblock %}

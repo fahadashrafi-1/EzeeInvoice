@@ -1,9 +1,6 @@
-
 from django.urls import path
 from .views import *
 from . import views
-from wkhtmltopdf.views import PDFTemplateView
-
 
 
 urlpatterns = [
@@ -20,6 +17,7 @@ urlpatterns = [
     path('custList/<pk>/CustDelete/', views.customerDelete.as_view()),
     path('NewInvoice/', views.NewInvo.as_view()),
     path('Invoices/', itemInvocieDesicription.as_view(), name='invo-list'),
+    path('Search/', InvoiceSerchView.as_view()),
     path('<pk>/InvoDetails/', invoDetail.as_view()),
     path('<pk>/InvoDetailsPdf/', views.PDFTempView.as_view()),
     path('<pk>/InvoUpdate/', views.InvoiceUpdate.as_view()),
