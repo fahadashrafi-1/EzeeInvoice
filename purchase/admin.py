@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import customers, items, invoice , invoice_description
+from .models import customers, items, invoice , InvoiceDescription
 from django.db.models import F, Sum
 
 
@@ -16,7 +16,7 @@ admin.site.site_header = 'Eee-Zee Invoice'
 # #     model = customers
 
 class invoicedescriptionInline(admin.TabularInline):
-    model = invoice_description
+    model = InvoiceDescription
     exclude = (['total_price', 'total_vat', 'vat'])
     extra = 3
 

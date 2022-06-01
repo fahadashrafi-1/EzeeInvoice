@@ -100,7 +100,7 @@ class invoDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
         context['qrdata'] = QRCodeImage([data], size=45 * mm)
 
@@ -113,7 +113,7 @@ class PDFTempView(PDFTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
         context['qrdata'] = QRCodeImage([data], size=45 * mm)
 
@@ -153,7 +153,7 @@ class InvoiceUpdate(UpdateView):
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        context['invoice_items'] = invoice_description.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         if self.request.POST:
             context['invoice_items'] = InvoiceDescr(self.request.POST)
         else:
