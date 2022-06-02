@@ -58,12 +58,16 @@ class InvoiceDescription(models.Model):
 
     @property
     def invoice_total(self):
-        return self.get_total * self.get_vat
+        amt = Sum(self.get_total)
+        tax = Sum(self.get_vat)
+        totalamt = amt + tax
+        return totalamt
      
     
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
+        print(self.invoice_total)
         super(InvoiceDescription, self).save()
 
 
