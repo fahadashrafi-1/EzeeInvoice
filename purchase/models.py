@@ -34,8 +34,8 @@ class invoice(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
-        
-    
+ 
+   
 class InvoiceDescription(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
     items = models.ForeignKey(items, on_delete=models.CASCADE)
@@ -57,17 +57,15 @@ class InvoiceDescription(models.Model):
         return self.get_total * 0.15
 
     @property
-    def invoice_total(self):
-        amt = Sum(self.get_total)
-        tax = Sum(self.get_vat)
-        totalamt = amt + tax
-        return totalamt
+    def invoice_line_total(self):
+        lineamt = self.get_total + self.get_vat
+        return lineamt
      
     
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
-        print(self.invoice_total)
+        print(self.invoice_line_total)
         super(InvoiceDescription, self).save()
 
 
