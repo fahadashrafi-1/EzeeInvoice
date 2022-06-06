@@ -29,12 +29,21 @@ class invoice(models.Model):
     comments = models.CharField('Comments',max_length=300, blank=True)
     
     class meta:
-        ordering = ['-id']
+        ordering = ['-invoice_Date', '-id' ]
 
     def __str__(self):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
- 
+    
+    def total(self):
+        tot = 0
+        invoice_total = self.invoiceDescription_set.all()
+        for total in invoice_total:
+            tot += total.get_total()
+            print(tot)
+            return tot
+    
+             
    
 class InvoiceDescription(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
@@ -65,7 +74,6 @@ class InvoiceDescription(models.Model):
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
-        print(self.invoice_line_total)
         super(InvoiceDescription, self).save()
 
 
