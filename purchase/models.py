@@ -8,6 +8,23 @@ import uuid
 
 # Create your models here.
 
+class customers(models.Model):
+    cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
+    address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')
+    supplier_Terms = models.CharField(max_length=200)
+    supplier_Contact_Name = models.CharField(max_length=200)
+    mobile_no = models.IntegerField(help_text="0505050505", default=123)
+    land_Line = models.IntegerField(help_text="096611-2335464", default=123)
+
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.cusotmer_name
+    
+    def get_absolute_url(self):
+        return reverse('profile-update', kwargs={'pk': self.pk})
+
+
 class items(models.Model):
     item_number = models.CharField(verbose_name='Reference No' , max_length=30, blank=True ,help_text='item-001')
     item_name = models.CharField( verbose_name='Items' , max_length=60, help_text='Paper Cups grey')
@@ -35,14 +52,16 @@ class invoice(models.Model):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
     
-    def total(self):
-        tot = 0
-        invoice_total = self.invoiceDescription_set.all()
-        for total in invoice_total:
-            tot += total.get_total()
-            print(tot)
-            return tot
-    
+    @property
+    def colo(self):
+        colo = 0
+        for item in range(10):
+            tot = 10000
+            return colo
+
+    def save(self, *args, **kwargs):
+        self.total_Ammount = self.colo
+        super(invoice, self).save()    
              
    
 class InvoiceDescription(models.Model):
@@ -52,6 +71,7 @@ class InvoiceDescription(models.Model):
     quantity = models.IntegerField('Quantity',default=0, blank=False)
     total_price = models.IntegerField('Total Ammount',default=0, help_text='item_price * item quantity')
     total_vat = models.IntegerField('Vat',default=0, help_text='200')
+    total_line_value = models.IntegerField('Vat',default=0, help_text='200')
         
     def __str__(self):
         """String for representing the Model object."""
@@ -74,21 +94,7 @@ class InvoiceDescription(models.Model):
     def save(self, *args, **kwargs):
         self.total_price = self.get_total
         self.total_vat = self.get_vat
+        self.total_line_value = self.invoice_line_total
         super(InvoiceDescription, self).save()
 
 
-class customers(models.Model):
-    cusotmer_name = models.CharField(max_length=120, help_text='Fortune Makers')
-    address = models.CharField(max_length=120, help_text='106 Ar Riyadh Aveneu')
-    supplier_Terms = models.CharField(max_length=200)
-    supplier_Contact_Name = models.CharField(max_length=200)
-    mobile_no = models.IntegerField(help_text="0505050505", default=123)
-    land_Line = models.IntegerField(help_text="096611-2335464", default=123)
-
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.cusotmer_name
-    
-    def get_absolute_url(self):
-        return reverse('profile-update', kwargs={'pk': self.pk})

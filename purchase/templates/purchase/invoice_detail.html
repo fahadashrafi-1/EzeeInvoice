@@ -53,6 +53,7 @@
   <td>{{ invo.get_vat }}</td>
   <td>{{ invo.invoice_line_total }}</td>
   {% endfor %}
+  </tr>
 </tbody>
 </table>
 
@@ -60,9 +61,9 @@
 
 <br>
 <br>
-
-<p class="fs-3">Total VAT on Inovice : {{ invoice.Vat }}</p> 
-<p class="fs-3">Total Amount on Inovice : {{ invoice.tot }}</p> 
+<p class="fs-3">Total Ammount on Inovice : {{ total_amount.total_price__sum }}</p> 
+<p class="fs-3">Total VAT on Inovice : {{ total_vat.total_vat__sum }}</p> 
+<p class="fs-3">Total Amount on Inovice (Tax Included): {{ total_price.total_line_value__sum }}</p> 
 
 <br>
 <br>

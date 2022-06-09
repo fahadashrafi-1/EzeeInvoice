@@ -26,6 +26,7 @@ import datetime as dt
 from wkhtmltopdf.views import PDFTemplateView
 from datetime import datetime
 import qrcode
+from django.db.models import Sum
 
 
 def pdfview(request):
@@ -111,9 +112,15 @@ class invoDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
-        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        context['qrdata'] = QRCodeImage([data], size=45 * mm)
+        # context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        # data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
+        # context['qrdata'] = QRCodeImage([data], size=45 * mm)
+        query = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = query
+        context['total_amount'] = query.aggregate(Sum('total_price'))
+        context['total_vat'] = query.aggregate(Sum('total_vat'))
+        context['total_price'] = query.aggregate(Sum('total_line_value'))
+        
         return context
 
 class PDFTempView(PDFTemplateView):
