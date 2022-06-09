@@ -11,6 +11,7 @@ from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpRe
 from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
+from isort import stream
 from requests import request
 from .models import *
 import pandas as pd
@@ -106,6 +107,8 @@ def NewCustomer(request):
         form =  CustomerForm()
     return render(request, 'purchase/customer_create.html', {'form': form})
 
+from qrcode.image.svg import SvgImage
+from qrcode import *
 class invoDetail(DetailView):
     model = invoice
     template_name = 'purchase/invoice_detail.html'
@@ -113,8 +116,11 @@ class invoDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
-        # data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
+        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
         # context['qrdata'] = QRCodeImage([data], size=45 * mm)
+        context['qrdata'] = qrcode.make(data)
+        context['qrdata'] = context['qrdata'].save("static/test.png")
+        
         query = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         context['invoice_items'] = query
         context['total_amount'] = query.aggregate(Sum('total_price'))

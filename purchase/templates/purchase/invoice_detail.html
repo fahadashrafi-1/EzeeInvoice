@@ -1,5 +1,7 @@
 {% extends 'purchase/base.html' %}
 
+{% load static %}
+
 {% block content %}
 
 <center>
@@ -29,10 +31,10 @@
 <br>
 <table class="table table-striped">
   <thead>
-      <th scope="col">Item Number </th>
-      <th scope="col">Item Name</th>
-      <th scope="col">Price </th>
-      <th scope="col">Quantity</th>
+      <th scope="col"> Item Number </th>
+      <th scope="col"> Item Name</th>
+      <th scope="col"> Price </th>
+      <th scope="col"> Quantity </th>
       <th scope="col"> Amount </th>
       <th scope="col"> VAT </th>
       <th scope="col"> Total </th>
@@ -70,12 +72,10 @@
 </ul>
 
 <p class="fs-3"> {{ qrdata }} </p> 
-<image class="show">{{ image|safe }}</image>
-{{ svg|safe }}
-<!-- <img src="{{ qrdata.url }}".png > -->
-
-
-
+<!-- <image class="show">static/test.png</image> -->
+<!-- <img src="{% static 'test.png' %}"/> -->
+{{ qrdata|safe }}
+<img src="C:/Users/Administrator/Documents/GitHub/EzeeInvoice/static/test.png" class="img-fluid mw-md-120">
 
 
 
