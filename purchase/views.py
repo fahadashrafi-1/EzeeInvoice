@@ -30,6 +30,7 @@ import qrcode
 from django.db.models import Sum
 
 
+
 def pdfview(request):
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
@@ -107,26 +108,21 @@ def NewCustomer(request):
         form =  CustomerForm()
     return render(request, 'purchase/customer_create.html', {'form': form})
 
-from qrcode.image.svg import SvgImage
-from qrcode import *
 class invoDetail(DetailView):
     model = invoice
     template_name = 'purchase/invoice_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
-        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        # context['qrdata'] = QRCodeImage([data], size=45 * mm)
-        context['qrdata'] = qrcode.make(data)
-        context['qrdata'] = context['qrdata'].save("static/test.png")
-        
+        context = super().get_context_data(**kwargs)        
         query = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         context['invoice_items'] = query
         context['total_amount'] = query.aggregate(Sum('total_price'))
         context['total_vat'] = query.aggregate(Sum('total_vat'))
         context['total_price'] = query.aggregate(Sum('total_line_value'))
-        
+        data = [context['total_amount'], context['total_vat'], context['total_price']]
+        context['qrdata'] = qrcode.make(data)
+        file = context['qrdata']
+        file.save("purchase/static/qr.png")
         return context
 
 class PDFTempView(PDFTemplateView):
@@ -135,12 +131,16 @@ class PDFTempView(PDFTemplateView):
     filename = 'Invoice_'+str(datetime.now())+'.pdf'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
-        data = ['EzeInovice', '123459878', 100, 15, dt.datetime.now()]
-        context['qrdata'] = QRCodeImage([data], size=45 * mm)
-        context['image'] = qrcode.make(data)        
-
+        context = super().get_context_data(**kwargs)        
+        query = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = query
+        context['total_amount'] = query.aggregate(Sum('total_price'))
+        context['total_vat'] = query.aggregate(Sum('total_vat'))
+        context['total_price'] = query.aggregate(Sum('total_line_value'))
+        data = [context['total_amount'], context['total_vat'], context['total_price']]
+        context['qrdata'] = qrcode.make(data)
+        file = context['qrdata']
+        file.save("purchase/static/qr.png")
         return context
 
 class NewInvo(CreateView):

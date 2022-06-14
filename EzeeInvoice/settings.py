@@ -25,7 +25,7 @@ SECRET_KEY = '9mobmg9_tn%=j#xf2%(69g@5zns$14azqq3$$0dfbfk^@nr(c5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

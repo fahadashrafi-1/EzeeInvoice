@@ -19,7 +19,7 @@ urlpatterns = [
     path('Invoices/', itemInvocieDesicription.as_view(), name='invo-list'),
     path('Search/', InvoiceSerchView.as_view()),
     path('<pk>/InvoDetails/', invoDetail.as_view()),
-    path('<pk>/InvoDetailsPdf/', views.PDFTempView.as_view()),
+    path('<pk>/InvoDetailsPdf/', PDFTempView.as_view()),
     path('<pk>/InvoUpdate/', views.InvoiceUpdate.as_view()),
     path('pdf/', views.pdfview),
     path('<pk>/pdf1/', views.pdfview1),

@@ -5,23 +5,46 @@
 {% block content %}
 
 <center>
-  <h1> Ezee Invocie</h1>
-
-  <h2> Vat No 123456789</h2>
-
+  <img src="{% static 'Software_Factory.png' %}" style="width:120px;height:150px;">
+  <h1> Ezee Invocie </h1><br>
+     <h3><i>by Software Factory</i></h3>
+     <br>
+     <h2> VAT No 123456789 رقم ضريبة</h2>
+  <br>
   <h3>VAT Invoice No  {{ invoice.id }} ضريبة القيمة المضافة  </h2>
 
 </center>
 <br><br>
-<p class="fs-4">Issued To : <b> {{ invoice.cusotmer_name }} </b></p> 
 
-<p class="fs-4">Issued On : <b>{{ invoice.invoice_Date }}</b></p> 
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p class="fs-4">Issued To : <b> {{ invoice.cusotmer_name }} </b></p>       
+    </div>
+    <div class="col">
+      <p class="fs-4">Issued On : <b>{{ invoice.invoice_Date }}</b></p> 
+    </div>
 
-<p class="fs-4">For Department : <b>{{ invoice.department }}</b></p> 
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="fs-4">For Department : <b>{{ invoice.department }} </b></p>       
+        </div>
+        <div class="col">
+          <p class="fs-4">Terms and Conditions : <b>{{ invoice.terms }}</b></p> 
+        </div>
+    
+  </div>
+<br><br>
 
-<p class="fs-4">Terms and Conditions : <b>{{ invoice.terms }}</b></p> 
 
-<p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
+
+
+<p class="fs-4"></b></p> 
+
+<p class="fs-4"></b></p> 
+
+
 
 <br>
 
@@ -29,7 +52,7 @@
 
 <br><br><br>
 <br>
-<table class="table table-striped">
+<table class="table table-sm">
   <thead>
       <th scope="col"> Item Number </th>
       <th scope="col"> Item Name</th>
@@ -69,14 +92,11 @@
 
 <br>
 <br>
+<p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
+
 </ul>
-
-<p class="fs-3"> {{ qrdata }} </p> 
-<!-- <image class="show">static/test.png</image> -->
-<!-- <img src="{% static 'test.png' %}"/> -->
-{{ qrdata|safe }}
-<img src="C:/Users/Administrator/Documents/GitHub/EzeeInvoice/static/test.png" class="img-fluid mw-md-120">
-
-
+<center>
+<img src="{% static 'qr.png' %}" style="width:120px;height:150px;">
+</center>
 
 {% endblock %}

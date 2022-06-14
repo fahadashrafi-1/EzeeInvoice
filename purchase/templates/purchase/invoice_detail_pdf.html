@@ -1,4 +1,5 @@
 
+{% load static %}
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <head>
   <style type="text/css">
@@ -71,11 +72,7 @@
 
 <p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
 
-<br>
-
-
-
-<br><br><br>
+<br><br><br><br>
 <br>
 <table class="table table-striped">
   <thead>
@@ -108,17 +105,22 @@
 
 
 
-<br>
-<br>
 
-<p class="fs-3">Total VAT on Inovice : {{ invoice.Vat }}</p> 
-<p class="fs-3">Total Amount on Inovice : {{ invoice.total_Ammount }}</p> 
 
 <br>
 <br>
+<p class="fs-3">Total Ammount on Inovice : {{ total_amount.total_price__sum }}</p> 
+<p class="fs-3">Total VAT on Inovice : {{ total_vat.total_vat__sum }}</p> 
+<p class="fs-3">Total Amount on Inovice (Tax Included): {{ total_price.total_line_value__sum }}</p> 
+
+<br>
+<br>
+<p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
+
 </ul>
-
 <p class="fs-3"> {{ qrdata }}</p> 
+
+
 <!-- <img src="{{ qrdata.url }}".png > -->
 
 

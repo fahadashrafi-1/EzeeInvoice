@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import customers, items, invoice , InvoiceDescription
+from .models import customers, items, invoice , InvoiceDescription, company
 from django.db.models import F, Sum
 
 
@@ -65,5 +65,6 @@ class customerDisplay(admin.ModelAdmin):
 admin.site.register(invoice, invoiceadmin),
 admin.site.register(items, itemsDisplay),
 admin.site.register(customers, customerDisplay),
+admin.site.register(company),
 
 

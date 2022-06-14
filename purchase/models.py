@@ -97,4 +97,19 @@ class InvoiceDescription(models.Model):
         self.total_line_value = self.invoice_line_total
         super(InvoiceDescription, self).save()
 
+class company(models.Model):
+    company = models.CharField(max_length=80)
+    vat = models.IntegerField(default=0)
+    address = models.CharField(max_length=40)
+    iban = models.CharField(max_length=14)
+    email = models.EmailField()
+    phone = models.IntegerField(default=0, blank=True)
+    logo = models.ImageField()
+    zacta_API_Key = models.CharField(max_length=40, blank=True)
+
+
+    def __str__(self):
+        return self.company
+
+
 
