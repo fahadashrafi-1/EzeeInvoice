@@ -52,6 +52,8 @@ class invoice(models.Model):
         """String for representing the Model object."""
         return str(self.cusotmer_name)
     
+    # this is comment
+
     @property
     def colo(self):
         colo = 0
