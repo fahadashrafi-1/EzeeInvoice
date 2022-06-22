@@ -1,5 +1,5 @@
 {% extends 'purchase/base.html' %}
-{% load crispy_forms_tags %}
+
 {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
@@ -20,15 +20,19 @@
             <br>
             
             {{ form|crispy }}
+            
 
             <h3 class="text-info">Add Items Details </h3>
 
-            
-            <table>
-            
-                <!-- <td> {{ InvoiceDescr.as_table }} </td> -->
+                    
 
-                
+              <br>  {{ InvoiceDescr }} <br><br><br>
+
+<!--                 
+                {% for item in InvoiceDescr.hidden_fields %}
+                   {{ hidden }}
+                {% endfor %}
+
                 {% for item in InvoiceDescr %}
                 
 
@@ -48,10 +52,10 @@
                 </div>
          
                 
-                  {% endfor %}            
+                  {% endfor %}             -->
 
 
-            </table> 
+        
 
             <input type="submit" value="Submit">
 

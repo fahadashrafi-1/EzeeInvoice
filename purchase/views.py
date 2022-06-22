@@ -145,7 +145,7 @@ class PDFTempView(PDFTemplateView):
 
 class NewInvo(CreateView):
     model = invoice
-    fields = '__all__'
+    fields = ['department', 'cusotmer_name', 'terms' , 'comments']
     success_url = '/Invoices/'
         
     def get_context_data(self, **kwargs):
@@ -296,4 +296,5 @@ def chart(request):
                output_type='div')
 
     return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
+
 
