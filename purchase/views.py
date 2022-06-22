@@ -176,7 +176,8 @@ class InvoiceUpdate(UpdateView):
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = InvoiceDescr.objects.filter(invoice_id=self.kwargs['pk'])
+   
         if self.request.POST:
             context['invoice_items'] = InvoiceDescr(self.request.POST)
         else:
