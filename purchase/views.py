@@ -31,6 +31,7 @@ from django.db.models import Sum
 
 
 
+
 def pdfview(request):
     x = ["Ezee Invocie", 123456789, 50, 30, 290]
     qr = QRCodeImage([x], size=40 * mm)
@@ -59,6 +60,9 @@ def pdfview(request):
 
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='Ezee-Invoice.pdf')
+
+def home(request):
+    return home
 
 def index(request):
     context = {

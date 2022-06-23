@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import include , path
 from .views import *
 from . import views
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -25,5 +26,6 @@ urlpatterns = [
     path('<pk>/pdf1/', views.pdfview1),
     path('charts/', views.chart),
     path('', views.index, name='index'),
+
 
 ]
