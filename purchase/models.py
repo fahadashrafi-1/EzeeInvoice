@@ -24,9 +24,8 @@ class customers(models.Model):
     def get_absolute_url(self):
         return reverse('profile-update', kwargs={'pk': self.pk})
 
-
 class items(models.Model):
-    item_number = models.CharField(verbose_name='Reference No' , max_length=30, blank=True ,help_text='item-001')
+    item_number = models.IntegerField(verbose_name='Item Number' , blank=True ,help_text='item-001')
     item_name = models.CharField( verbose_name='Items' , max_length=60, help_text='Paper Cups grey')
     item_detail = models.CharField(verbose_name='Item Details' , max_length=120, blank=True, help_text='Paper Cups grey')
     item_date_created = models.DateField('Creation Date', auto_now_add=True, help_text='Date when item was created')
@@ -34,6 +33,17 @@ class items(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.item_name
+    
+    def itemNo(self):
+        itemserial = items.objects.all().count()
+        itemserial = itemserial + 1000
+        return itemserial
+
+    def save(self, *args, **kwargs):
+        print(self.itemNo())
+        self.item_number = self.itemNo()
+        super(items, self).save()
+
 
 class invoice(models.Model):
     unique_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
@@ -64,8 +74,7 @@ class invoice(models.Model):
     def save(self, *args, **kwargs):
         self.total_Ammount = self.colo
         super(invoice, self).save()    
-             
-   
+               
 class InvoiceDescription(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
     items = models.ForeignKey(items, on_delete=models.CASCADE)

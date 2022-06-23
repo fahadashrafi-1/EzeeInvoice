@@ -19,7 +19,7 @@ class NameForm(forms.Form):
 class ItemsForm(ModelForm):
     class Meta:
         model = items
-        fields = ['item_number', 'item_name', 'item_detail']
+        fields = ['item_name', 'item_detail']
         success_url = reverse_lazy('items-list')
 
     def __init__(self, *args, **kwargs):
@@ -31,7 +31,6 @@ class ItemsForm(ModelForm):
 
         self.helper.layout = Layout(
             Row(
-                Column('item_number'),
                 Column('item_name'),
                 Column('item_detail')
             )
@@ -71,8 +70,6 @@ class InvoiceDescr(ModelForm):
 
 InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription,
                                         form=InvoiceDescr, extra=3)
-
-InvoDescr = formset_factory(InvoiceDescr, extra=3)
 
 class NewInvoice(ModelForm):
     class Meta:
