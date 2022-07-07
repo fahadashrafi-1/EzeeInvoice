@@ -20,8 +20,16 @@
 
             {{ form |crispy }}
       
+            {% csrf_token %}
+            
+            <h3 class="text-info">Edit Invoice  </h3>
+            <br>
 
-
+            <!-- {{ invoice_items }} -->
+            {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+{% endfor %}
+                
 <br>
 <table class="table table-striped">
   <thead>
@@ -48,7 +56,7 @@
   <td>{{ invo.get_total }}</td>
   <td>{{ invo.get_vat }}</td>
   <td>{{ invo.invoice_line_total }}</td>
-  {% endfor %}
+  {% endfor %} 
 
 
 </tbody>
@@ -62,7 +70,8 @@
         </form>
 
 
-        {% endblock content %}
+        {% endblock content %} 
+
 
     </body>
 

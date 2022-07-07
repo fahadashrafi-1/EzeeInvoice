@@ -1,4 +1,3 @@
-from sre_constants import SUCCESS
 from django.forms import ModelForm, fields
 from django.forms import formset_factory, inlineformset_factory
 from django import forms
@@ -68,8 +67,7 @@ class InvoiceDescr(ModelForm):
         extra = 3
         fields = ['items', 'item_price', 'quantity']
 
-InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription,
-                                        form=InvoiceDescr, extra=3)
+InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription, form=InvoiceDescr, extra=3)
 
 class NewInvoice(ModelForm):
     class Meta:

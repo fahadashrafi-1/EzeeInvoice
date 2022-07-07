@@ -61,9 +61,6 @@ def pdfview(request):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='Ezee-Invoice.pdf')
 
-def home(request):
-    return home
-
 def index(request):
     context = {
     'tot_custo' : customers.objects.all().count(),
@@ -177,17 +174,31 @@ class InvoiceUpdate(UpdateView):
     fields = '__all__'
     success_url = '/'
     template_name = 'purchase/invocie_update.html'
+    success_message = 'Invoice Datsa saved successfully'
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        # context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
    
         if self.request.POST:
-            context['invoice_items'] = InvoiceDescr(self.request.POST)
-        # else:
-        #     context['invoice_items'] = InvoiceDescr()
-        return context
+            context['invoice_items'] = InvoiceDescr(self.request.POST, instance=self.object)
             
+        else:
+            context['invoice_items'] = InvoiceDescr(instance=self.object)
+                    
+        return context
+    
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['invoice_items']
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+            return redirect('invo-list')
+        else:
+            # return super().form_invalid(formset)
+            return HttpResponse('Form Not Saved Saved')
+
 def NewItem(request):
     if request.method == "POST":
         form = ItemsForm(request.POST)
@@ -285,7 +296,6 @@ from django.shortcuts import render
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import plotly.graph_objects as go
-
 
 def chart(request):
     context = invoice.objects.values()
