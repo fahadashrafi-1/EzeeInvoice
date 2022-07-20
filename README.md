@@ -38,7 +38,7 @@ Please DM me if you face any problem in setting up Ezee Invoice Setup
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/Dashboared.png)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/InvoiceList.PNG)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/InvoiceDetails.PNG)
-![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/HtmlInvoice.png.PNG)
+![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/HtmlInvoice.PNG)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/NewCustomer.png)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/CustomerList.PNG)
 ![image](https://github.com/fahadashrafi-1/EzeeInvoice/blob/main/Docs/B2B_Invoice.PNG)
