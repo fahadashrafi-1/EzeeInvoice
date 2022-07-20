@@ -1,19 +1,23 @@
 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 {% load static %}
 
 
 {% block content %}
 
 <center>
+
   <h1> Ezee Invocie </h1><br>
      <h3><i>by Software Factory</i></h3>
      <br>
      <h2> VAT No 123456789 رقم ضريبة</h2>
   <br>
-  <h3>VAT Invoice No {{ invoice.id }} ضريبة القيمة المضافة  </h2>
+  <h3>VAT Invoice No <B> {{ invoice.id }} </B> ضريبة القيمة المضافة  </h2>
 
 </center>
 <br><br>
+
 <p class="fs-4">Issued To : <b> {{ invoice.cusotmer_name }} </b></p> 
 
 <p class="fs-4">Issued On : <b>{{ invoice.invoice_Date }}</b></p> 
@@ -61,7 +65,7 @@
 
 <br>
 <br>
-<p class="fs-3">Total Ammount on Inovice : {{ total_amount.total_price__sum }}</p> 
+<p class="fs-3">Total Amount on Inovice : {{ total_amount.total_price__sum }}</p> 
 <p class="fs-3">Total VAT on Inovice : {{ total_vat.total_vat__sum }}</p> 
 <p class="fs-3">Total Amount on Inovice (Tax Included): {{ total_price.total_line_value__sum }}</p> 
 
@@ -73,7 +77,8 @@
 <p class="fs-3"> {{ qrdata }}</p> 
 
 
-<!-- <img src="{{ qrdata.url }}".png > -->
+<!-- <img src="{% static 'qr.png' %}".png > -->
+<!-- <img src="{% static 'qr.png' %}" style="width:120px;height:150px;"> -->
 
 
 

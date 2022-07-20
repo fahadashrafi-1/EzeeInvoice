@@ -3,7 +3,10 @@
 {% load static %}
 
 {% block content %}
+<right>
 
+<a class="btn btn-info btn-lg float-right" href="/{{ invoice.id }}/InvoDetails/InvoDetailsPdf/" role="button"> Downlaod </a> 
+</right>
 <center>
   <img src="{% static 'Software_Factory.png' %}" style="width:120px;height:150px;">
   <h1> Ezee Invocie </h1><br>
@@ -97,6 +100,7 @@
 </ul>
 <center>
 <img src="{% static 'qr.png' %}" style="width:120px;height:150px;">
-</center>
+</center></td>
+
 
 {% endblock %}

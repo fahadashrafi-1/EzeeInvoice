@@ -6,7 +6,7 @@ from dagster import success_hook
 from django import http
 from django.http import response
 from django.http.response import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import templatize
@@ -24,7 +24,7 @@ from reportlab.platypus.tables import Table
 from .forms import InvoDescr, InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 import datetime as dt
-from wkhtmltopdf.views import PDFTemplateView
+from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
 from datetime import datetime
 import qrcode
 from django.db.models import Sum
@@ -129,10 +129,12 @@ class invoDetail(DetailView):
 class PDFTempView(PDFTemplateView):
     model = invoice
     template_name = 'purchase/invoice_detail_pdf.html'
-    filename = 'Invoice_'+str(datetime.now())+'.pdf'
+    filename = 'Invoice_'+str(datetime.now())+'' + str(invoice.comments)  +'.pdf'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
+        context = super().get_context_data(**kwargs)       
+        master = get_object_or_404(invoice, id=self.kwargs['pk'])
+        context['invoice'] = master
         query = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
         context['invoice_items'] = query
         context['total_amount'] = query.aggregate(Sum('total_price'))
@@ -141,7 +143,10 @@ class PDFTempView(PDFTemplateView):
         data = [context['total_amount'], context['total_vat'], context['total_price']]
         context['qrdata'] = qrcode.make(data)
         file = context['qrdata']
-        file.save("purchase/static/qr.png")
+        # file.save("purchase/static/qr.png")
+        # file = open("purchase/static/qr.png")
+        context['qrdata'] = file
+        
         return context
 
 class NewInvo(CreateView):
