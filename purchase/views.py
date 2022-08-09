@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
 from isort import stream
+from pendulum import instance
 from requests import request
 from .models import *
 import pandas as pd
@@ -177,17 +178,17 @@ class NewInvo(CreateView):
 class InvoiceUpdate(UpdateView):
     model = invoice
     fields = '__all__'
-    success_url = '/'
+    success_url = '/Invoices/'
     template_name = 'purchase/invocie_update.html'
-    success_message = 'Invoice Datsa saved successfully'
         
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        # context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
+        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
    
         if self.request.POST:
+            context['form'] = NewInvoice(self.request.POST, instance = self.object)
             context['invoice_items'] = InvoiceDescr(self.request.POST, instance=self.object)
-            
+        
         else:
             context['invoice_items'] = InvoiceDescr(instance=self.object)
                     
@@ -197,6 +198,7 @@ class InvoiceUpdate(UpdateView):
         context = self.get_context_data(form=form)
         formset = context['invoice_items']
         if formset.is_valid():
+            form.save()
             formset.instance = self.object
             formset.save()
             return redirect('invo-list')
