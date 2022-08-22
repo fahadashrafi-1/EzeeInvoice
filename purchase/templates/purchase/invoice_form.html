@@ -16,11 +16,11 @@
     
             {% csrf_token %}
             
-            <h3 class="text-info">Add Invoice  </h3>
+            <h3 class="text-info">Add Invoice </h3>
             <br>
             
             {{ form|crispy }}
-            
+            <!-- {{ form }} -->
 
             <h3 class="text-info">Add Items Details </h3>
 
@@ -28,34 +28,7 @@
 
               <br>  {{ InvoiceDescr }} <br><br><br>
 
-<!--                 
-                {% for item in InvoiceDescr.hidden_fields %}
-                   {{ hidden }}
-                {% endfor %}
-
-                {% for item in InvoiceDescr %}
-                
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm">
-                      {{ item.items|as_crispy_field }} 
-                    </div>
-                    <div class="col-sm">
-                      {{ item.item_price|as_crispy_field }} 
-                    </div>
-                    <div class="col-sm">
-                      {{ item.quantity|as_crispy_field }} 
-                     
-                </div>
-                  </div>
-                </div>
-         
-                
-                  {% endfor %}             -->
-
-
-        
+    
 
             <input type="submit" value="Submit">
 

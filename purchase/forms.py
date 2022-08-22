@@ -1,3 +1,5 @@
+from asyncio.format_helpers import extract_stack
+import imp
 from django.forms import ModelForm, fields
 from django.forms import formset_factory, inlineformset_factory
 from django import forms
@@ -5,6 +7,7 @@ from .models import *
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column, HTML
 from django.urls import reverse_lazy
+from .models import invoice, InvoiceDescription
 
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
@@ -64,10 +67,10 @@ class CustomerForm(ModelForm):
 class InvoiceDescr(ModelForm):
     class Meta:
         model = InvoiceDescription
+        fields = ['items', 'quantity', 'item_price',]
         extra = 3
-        fields = ['items', 'item_price', 'quantity']
 
-InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription, form=InvoiceDescr, extra=3)
+InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription, form=InvoiceDescr, can_delete=False, )
 
 class NewInvoice(ModelForm):
     class Meta:

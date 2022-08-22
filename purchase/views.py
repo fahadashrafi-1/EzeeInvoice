@@ -22,7 +22,7 @@ import io
 from reportlab_qrcode import QRCodeImage
 from reportlab.lib.units import mm
 from reportlab.platypus.tables import Table
-from .forms import InvoDescr, InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
+from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 import datetime as dt
 from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
@@ -153,8 +153,10 @@ class PDFTempView(PDFTemplateView):
 class NewInvo(CreateView):
     model = invoice
     fields = ['department', 'cusotmer_name', 'terms' , 'comments']
+    template_name = 'purchase/invoice_form.html'
     success_url = '/Invoices/'
-        
+    # form_name = NewInvoice()
+
     def get_context_data(self, **kwargs):
         context = super(NewInvo, self).get_context_data(**kwargs)
         if self.request.POST:
@@ -172,7 +174,6 @@ class NewInvo(CreateView):
             formset.save()
             return redirect('invo-list')
         else:
-            # return super().form_invalid(formset)
             return HttpResponse('Form Not Saved Saved')
 
 class InvoiceUpdate(UpdateView):
@@ -239,7 +240,7 @@ class customerList(ListView):
 
 class customerDetails(DetailView):
     model = customers
-    fields: '__all__'
+    fields = '__all__'
     success_url = '/custList/'
 
 class customerUpdate(UpdateView):
