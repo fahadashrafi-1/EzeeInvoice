@@ -29,6 +29,7 @@ from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
 from datetime import datetime
 import qrcode
 from django.db.models import Sum
+import base64
 
 
 
@@ -142,11 +143,12 @@ class PDFTempView(PDFTemplateView):
         context['total_vat'] = query.aggregate(Sum('total_vat'))
         context['total_price'] = query.aggregate(Sum('total_line_value'))
         data = [context['total_amount'], context['total_vat'], context['total_price']]
-        context['qrdata'] = qrcode.make(data)
-        file = context['qrdata']
+        # context['qrdata'] = qrcode.make(data)
+        # file = context['qrdata']
         # file.save("purchase/static/qr.png")
         # file = open("purchase/static/qr.png")
-        context['qrdata'] = file
+        # context['qrdata'] = file
+        context['qrdata'] = base64.b64encode(b"data")
         
         return context
 

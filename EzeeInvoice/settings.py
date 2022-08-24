@@ -136,4 +136,5 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# WKHTMLTOPDF_CMD = 'C:/Program Files/wkhtmltopdf/bin/'
+STATIC_ROOT = 'C:/Users/Administrator/Documents/GitHub/EzeeInvoice/purchase/static/'
+
