@@ -1,5 +1,6 @@
 {% extends 'purchase/base.html' %}
 {% load crispy_forms_tags %}
+{% crispy formset helper %}
 
 <!DOCTYPE html>
 <html>
@@ -10,12 +11,12 @@
     <body>
 
         {% block content %}
-    
+ 
         <form action="" method="post">
     
             {% csrf_token %}
             
-            <h3 class="text-info">Add Invoice  </h3>
+            <h3 class="text-info">Edit Invoice  </h3>
             <br>
 
             {{ form |crispy }}
@@ -25,45 +26,14 @@
             <h3 class="text-info">Edit Invoice  </h3>
             <br>
 
-            <!-- {{ invoice_items }} -->
-            {% for hidden in form.hidden_fields %}
-    {{ hidden }}
-{% endfor %}
-                
-<br>
-<table class="table table-striped">
-  <thead>
-      <th scope="col">Item Number </th>
-      <th scope="col">Item Name</th>
-      <th scope="col">Price </th>
-      <th scope="col">Quantity</th>
-      <th scope="col"> Amount </th>
-      <th scope="col"> VAT </th>
-      <th scope="col"> Total </th>
+          <table>
+            <tr> {{ invoice_items.as_table }} </tr>
+          </table>
 
 
-    </tr>
-  </thead>
-
-  <tbody>
-{% for invo in invoice_items %}
-
-  <tr>
-  <th scope="row">{{ invo.id }}</th>
-  <td>{{ invo.items }}</td>
-  <td>{{ invo.item_price }}</a></td>
-  <td>{{ invo.quantity }}</td>
-  <td>{{ invo.get_total }}</td>
-  <td>{{ invo.get_vat }}</td>
-  <td>{{ invo.invoice_line_total }}</td>
-  {% endfor %} 
 
 
-</tbody>
-</table>
-
-
-      
+    
 
             <input type="submit" value="Submit">
 

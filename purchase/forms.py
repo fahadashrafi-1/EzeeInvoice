@@ -64,13 +64,28 @@ class CustomerForm(ModelForm):
             ,            
         )
 
-class InvoiceDescr(ModelForm):
+class InvoiceDescriPtion(ModelForm):
     class Meta:
         model = InvoiceDescription
         fields = ['items', 'quantity', 'item_price',]
         extra = 3
 
-InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription, form=InvoiceDescr, can_delete=False, )
+InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription,exclude=[], can_delete=True,)
+
+class InvoDescrFormSetHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form_method = 'post'
+        self.layout = Layout(
+            'items',
+            'item_price',
+            'quantity',
+            'get_total',
+        )
+        self.render_required_fields = True
+
+
+
 
 class NewInvoice(ModelForm):
     class Meta:
@@ -97,14 +112,3 @@ class NewInvoice(ModelForm):
             ,            
         )
 
-class InvoDescr(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.form_method = 'post'
-        self.layout = Layout(
-            'items',
-            'item_price',
-            'quantity',
-            'get_total',
-        )
-        self.render_required_fields = True

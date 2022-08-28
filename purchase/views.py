@@ -191,6 +191,7 @@ class InvoiceUpdate(UpdateView):
         if self.request.POST:
             context['form'] = NewInvoice(self.request.POST, instance = self.object)
             context['invoice_items'] = InvoiceDescr(self.request.POST, instance=self.object)
+            
                   
         else:
             context['invoice_items'] = InvoiceDescr(instance=self.object)
@@ -199,15 +200,12 @@ class InvoiceUpdate(UpdateView):
     
     def form_valid(self, form):
         context = self.get_context_data(form=form)
-        formset = context['invoice_items']
+        formsat = context['invoice_items']
         if form.is_valid():
-            formset.instance.id = self.object.pk
             response = super().form_valid(form)
-            form.save()
-            formset.save()
-            return redirect('invo-list')
-          
- 
+            formsat.instance = self.object
+            formsat.save()
+            return response
         else:
             # return super().form_invalid(formset)
             return HttpResponse('Form Not Saved Saved')
