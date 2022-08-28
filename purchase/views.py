@@ -131,7 +131,7 @@ class invoDetail(DetailView):
 class PDFTempView(PDFTemplateView):
     model = invoice
     template_name = 'purchase/invoice_detail_pdf.html'
-    filename = 'Invoice_'+str(datetime.now())+'' + str(invoice.comments)  +'.pdf'
+    filename = 'Invoice_'+str(datetime.now())+'.pdf'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)       
@@ -143,12 +143,10 @@ class PDFTempView(PDFTemplateView):
         context['total_vat'] = query.aggregate(Sum('total_vat'))
         context['total_price'] = query.aggregate(Sum('total_line_value'))
         data = [context['total_amount'], context['total_vat'], context['total_price']]
-        # context['qrdata'] = qrcode.make(data)
-        # file = context['qrdata']
-        # file.save("purchase/static/qr.png")
-        # file = open("purchase/static/qr.png")
-        # context['qrdata'] = file
-        context['qrdata'] = base64.b64encode(b"data")
+        context['qrdata'] = qrcode.make(data)
+        context['qrdata'] = context['qrdata']
+        file = context['qrdata']
+        file.save("qr.png")
         
         return context
 
