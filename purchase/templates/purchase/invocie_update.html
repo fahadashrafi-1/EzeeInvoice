@@ -1,6 +1,6 @@
 {% extends 'purchase/base.html' %}
 {% load crispy_forms_tags %}
-{% crispy formset helper %}
+
 
 <!DOCTYPE html>
 <html>
@@ -19,21 +19,16 @@
             <h3 class="text-info">Edit Invoice  </h3>
             <br>
 
-            {{ form |crispy }}
+            {{ form|crispy }}
       
-            {% csrf_token %}
             
             <h3 class="text-info">Edit Invoice  </h3>
             <br>
 
-          <table>
-            <tr> {{ invoice_items.as_table }} </tr>
-          </table>
+            <br>  {{ InvoiceDescr }} <br><br><br>
 
 
-
-
-    
+   
 
             <input type="submit" value="Submit">
 

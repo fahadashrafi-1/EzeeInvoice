@@ -1,19 +1,10 @@
-from cgitb import html
 from itertools import count
-import re
 from typing import Text
-from dagster import success_hook
-from django import http
-from django.http import response
-from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound, FileResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import templatize
 from django.views.generic import ListView
-from isort import stream
-from pendulum import instance
-from requests import request
 from .models import *
 import pandas as pd
 from django.template.response import TemplateResponse
@@ -24,14 +15,10 @@ from reportlab.lib.units import mm
 from reportlab.platypus.tables import Table
 from .forms import InvoiceDescr, NameForm, ItemsForm, CustomerForm, NewInvoice
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-import datetime as dt
-from wkhtmltopdf.views import PDFTemplateView, PDFTemplateResponse
+from wkhtmltopdf.views import PDFTemplateView 
 from datetime import datetime
 import qrcode
 from django.db.models import Sum
-import base64
-
-
 
 
 def pdfview(request):
@@ -155,7 +142,7 @@ class NewInvo(CreateView):
     fields = ['department', 'cusotmer_name', 'terms' , 'comments']
     template_name = 'purchase/invoice_form.html'
     success_url = '/Invoices/'
-    # form_name = NewInvoice()
+    form_name = NewInvoice()
 
     def get_context_data(self, **kwargs):
         context = super(NewInvo, self).get_context_data(**kwargs)
@@ -181,32 +168,29 @@ class InvoiceUpdate(UpdateView):
     fields = ['cusotmer_name', 'department', 'terms', 'comments']
     success_url = '/Invoices/'
     template_name = 'purchase/invocie_update.html'
-        
+
     def get_context_data(self, **kwargs):
         context = super(InvoiceUpdate, self).get_context_data(**kwargs)
-        context['invoice_items'] = InvoiceDescription.objects.filter(invoice_id=self.kwargs['pk'])
-   
         if self.request.POST:
-            context['form'] = NewInvoice(self.request.POST, instance = self.object)
-            context['invoice_items'] = InvoiceDescr(self.request.POST, instance=self.object)
-            
-                  
+            context['InvoiceDescr'] = InvoiceDescr(self.request.POST, instance=self.object)
+            context['InvoiceDescr'].full_clean()
         else:
-            context['invoice_items'] = InvoiceDescr(instance=self.object)
-                    
+            context['InvoiceDescr'] =InvoiceDescr(instance=self.object)
+        
         return context
+ 
     
     def form_valid(self, form):
         context = self.get_context_data(form=form)
-        formsat = context['invoice_items']
-        if form.is_valid():
+        formsat = context['InvoiceDescr']
+
+        if formsat.is_valid():
             response = super().form_valid(form)
             formsat.instance = self.object
             formsat.save()
             return response
         else:
-            # return super().form_invalid(formset)
-            return HttpResponse('Form Not Saved Saved')
+            return super().form_invalid(formsat)
 
 def NewItem(request):
     if request.method == "POST":
@@ -256,14 +240,15 @@ class customerDelete(DeleteView):
 def pdfview1(request, pk):
 
     context = invoice.objects.get(id=pk)
-    x = ["Ezee Invocie", 123456789, 50, 30, 290]
+    # context['company'] = invoice.cusotmer_name
+    x = ['ezee invoice']
     qr = QRCodeImage([x], size=40 * mm)
     buffer = io.BytesIO()
     p = canvas.Canvas(buffer)
 
     cent = p._pagesize[0] / 2
     
-    p.drawCentredString(cent, 800, "Ezee Invoices")
+    p.drawCentredString(cent, 800, context['company'])
     p.drawCentredString(cent, 750, "Vat No : 123456789")
     
     p.drawString(10, 700, "Customer Name : The First Customer")

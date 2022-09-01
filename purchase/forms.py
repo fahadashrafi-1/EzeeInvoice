@@ -1,7 +1,5 @@
-from asyncio.format_helpers import extract_stack
-import imp
-from django.forms import ModelForm, fields
-from django.forms import formset_factory, inlineformset_factory
+from django.forms import ModelForm
+from django.forms import inlineformset_factory
 from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
@@ -67,25 +65,8 @@ class CustomerForm(ModelForm):
 class InvoiceDescriPtion(ModelForm):
     class Meta:
         model = InvoiceDescription
-        fields = ['items', 'quantity', 'item_price',]
+        fields = ['items', 'quantity', 'item_price']
         extra = 3
-
-InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription,exclude=[], can_delete=True,)
-
-class InvoDescrFormSetHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.form_method = 'post'
-        self.layout = Layout(
-            'items',
-            'item_price',
-            'quantity',
-            'get_total',
-        )
-        self.render_required_fields = True
-
-
-
 
 class NewInvoice(ModelForm):
     class Meta:
@@ -111,4 +92,19 @@ class NewInvoice(ModelForm):
             )          
             ,            
         )
+
+InvoiceDescr = inlineformset_factory(invoice, InvoiceDescription,exclude=['total_price','total_vat', 'total_line_value'], can_delete=False)
+
+class InvoDescrFormSetHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.form_method = 'post'
+        self.layout = Layout(
+            'items',
+            'item_price',
+            'quantity',
+            'get_total',
+        )
+        self.render_required_fields = True
+
 

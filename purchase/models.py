@@ -44,7 +44,6 @@ class items(models.Model):
         self.item_number = self.itemNo()
         super(items, self).save()
 
-
 class invoice(models.Model):
     unique_id = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
     invoice_Date = models.DateField(auto_now=True)
@@ -78,8 +77,8 @@ class invoice(models.Model):
 class InvoiceDescription(models.Model):
     invoice = models.ForeignKey(invoice, on_delete=models.CASCADE)
     items = models.ForeignKey(items, on_delete=models.CASCADE)
-    item_price = models.IntegerField(default=0, help_text='200')
-    quantity = models.IntegerField('Quantity',default=0, blank=False)
+    item_price = models.IntegerField(default=0)
+    quantity = models.IntegerField('Quantity',default=0, blank=False, help_text='purchase')
     total_price = models.IntegerField('Total Ammount',default=0, help_text='item_price * item quantity')
     total_vat = models.IntegerField('Vat',default=0, help_text='200')
     total_line_value = models.IntegerField('Vat',default=0, help_text='200')
