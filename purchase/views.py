@@ -19,6 +19,8 @@ from wkhtmltopdf.views import PDFTemplateView
 from datetime import datetime
 import qrcode
 from django.db.models import Sum
+import base64
+from io import BytesIO
 
 
 def pdfview(request):
@@ -131,10 +133,18 @@ class PDFTempView(PDFTemplateView):
         context['total_price'] = query.aggregate(Sum('total_line_value'))
         data = [context['total_amount'], context['total_vat'], context['total_price']]
         context['qrdata'] = qrcode.make(data)
-        context['qrdata'] = context['qrdata']
+        # context['qrdata'] = context['qrdata']
         file = context['qrdata']
-        file.save("qr.png")
+        file.save("qr.jpeg")
+        buffered = BytesIO()
+        file.save(buffered, format="PNG")
+        context['qrdata'] = base64.b64encode(buffered.getvalue())
+        context['qrdata'] = context['qrdata'].decode()
+       
         
+            
+        
+       
         return context
 
 class NewInvo(CreateView):
@@ -248,7 +258,7 @@ def pdfview1(request, pk):
 
     cent = p._pagesize[0] / 2
     
-    p.drawCentredString(cent, 800, context['company'])
+    p.drawCentredString(cent, 800, "ezee invoice")
     p.drawCentredString(cent, 750, "Vat No : 123456789")
     
     p.drawString(10, 700, "Customer Name : The First Customer")

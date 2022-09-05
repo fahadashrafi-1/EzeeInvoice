@@ -5,7 +5,14 @@
 
 
 {% block content %}
+
 <!-- <img src="{% static 'Software_Factory.png' %}" style="width:120px;height:150px;"> -->
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+
+  </head>
 <center>
 
   <h1> Ezee Invocie </h1><br>
@@ -69,15 +76,15 @@
 <p class="fs-4">Notes :<b> {{ invoice.comments }}</b></p> 
 
 </ul>
-<p class="fs-3"> {{ qrdata }}</p> 
-
-<img src="data:image/png;base64,"{{ qrdata }}>
-
-<!-- {{ qrdata }} -->
 
 
-<!-- <img src="{% static 'qr.png' %}" style="width:120px;height:150px;"> -->
-<!-- <img src="{% static 'qr.png' %}" style="width:120px;height:150px;"> -->
+
+<div>
+<centre>
+<img src=data:image/jpeg;base64,{{ qrdata }} style="width:150px;height:150px;">
+</centre>
+</div>
+
 
 
 {% endblock %}

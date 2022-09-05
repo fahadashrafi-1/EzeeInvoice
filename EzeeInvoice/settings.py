@@ -132,13 +132,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'C:/Users/Administrator/Documents/GitHub/EzeeInvoice'
+STATIC_ROOT = 'C:/Users/Administrator/Documents/GitHub/EzeeInvoice/purchase/'
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
+print(STATIC_ROOT)
 
 
