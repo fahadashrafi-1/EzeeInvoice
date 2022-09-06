@@ -61,7 +61,9 @@ def index(request):
     return TemplateResponse(request, 'purchase/index.html', {'entries': context})
 
 class itemInvocieDesicription(ListView):
+    paginate_by = 12
     model = invoice
+    
 
 class InvoiceSerchView(ListView):
     model = invoice
@@ -140,9 +142,7 @@ class PDFTempView(PDFTemplateView):
         file.save(buffered, format="PNG")
         context['qrdata'] = base64.b64encode(buffered.getvalue())
         context['qrdata'] = context['qrdata'].decode()
-       
-        
-            
+              
         
        
         return context
