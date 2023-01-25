@@ -63,7 +63,7 @@ def index(request):
 class itemInvocieDesicription(ListView):
     paginate_by = 12
     model = invoice
-    
+  
 
 class InvoiceSerchView(ListView):
     model = invoice
