@@ -1,9 +1,7 @@
-from enum import unique
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models import Sum
 from django.urls import reverse
-from soupsieve import select
 import uuid
 
 # Create your models here.
