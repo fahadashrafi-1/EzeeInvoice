@@ -306,14 +306,23 @@ def chart(request):
     df = pd.DataFrame(context)
     df['invoice_Date'] = pd.to_datetime(df['invoice_Date'])
     x = df.groupby(df.invoice_Date.dt.month)[['total_Ammount']].sum()
+    vat_wise = df.groupby(df.invoice_Date.dt.month)[['total_Vat']].sum()
     x = x.reset_index()
 
     
     plot_div = plot([Scatter(x=x['invoice_Date'], y=x['total_Ammount'],
                         mode='lines',  name='test',
                         opacity=0.8, marker_color='Purple')],
-               output_type='div')
+                        output_type='div')
 
-    return render(request, "purchase/charts_page.html", context={'plot_div': plot_div})
+    plot_div2 = plot([Scatter(x=x['invoice_Date'], y=vat_wise['total_Vat'],
+                        mode='lines',  name='test1',
+                        opacity=0.9, marker_color='Green')],
+                        output_type='div')
+
+    return render(request, "purchase/charts_page.html", 
+                    context={'plot_div': plot_div, 
+                            'plot_div2': plot_div2,
+                            })
 
 
